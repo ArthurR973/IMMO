@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appartement à Louer - Omnes Immobilier</title>
+    <link rel="stylesheet" href="style_toutparcourir.css">
+</head>
+<body>
+    <header>
+        <h1>Omnes Immobilier</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="tout_parcourir.html">Tout Parcourir</a></li>
+                <li><a href="recherche.html">Recherche</a></li>
+                <li><a href="rendez_vous.html">Rendez-vous</a></li>
+                <li><a href="votre_compte.html">Votre Compte</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Appartement à Louer</h2>
+        <div class="property-list">
+            <!-- Example property card -->
+            <div class="property-card">
+                <img src="appartement1.jpg" alt="Photo de l'appartement">
+                <h3>Appartement T2</h3>
+                <p>Nombre de pièces : 2</p>
+                <p>Nombre de chambres : 1</p>
+                <p>Surface : 45 m²</p>
+                <p>Étage : 3</p>
+                <p>Balcon : Oui</p>
+                <p>Parking : Non</p>
+                <p>Adresse : 123 Rue Exemple, Paris</p>
+                <a href="agent.html">Contactez l'agent</a>
+            </div>
+            <!-- Add more property cards as needed -->
+        </div>
+    </main>
+
+    <footer>
+        <p>Contactez-nous : <a href="mailto:contact@omnesimmobilier.fr">contact@omnesimmobilier.fr</a></p>
+        <p>Téléphone : +33 01 23 45 67 89</p>
+        <div id="map"></div>
+    </footer>
+
+    <script>
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: 48.8566, lng: 2.3522},
+                zoom: 12
+            });
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+</body>
+</html>
