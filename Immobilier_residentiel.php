@@ -38,7 +38,7 @@ if ($result === FALSE) {
         <nav>
             <ul>
                 <li><a href="accueil.php">Accueil</a></li>
-                <li><a href="tout_parcourir.html">Tout Parcourir</a></li>
+                <li><a href="tout_parcourir.php">Tout Parcourir</a></li>
                 <li><a href="recherche.html">Recherche</a></li>
                 <li><a href="rendez_vous.html">Rendez-vous</a></li>
                 <li><a href="votre_compte.html">Votre Compte</a></li>
