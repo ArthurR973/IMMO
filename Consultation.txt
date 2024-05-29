@@ -1,0 +1,15 @@
+CREATE TABLE Consultation (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_client INT NOT NULL,
+    date DATE NOT NULL,
+    heure TIME NOT NULL,
+    id_agent INT NOT NULL,
+    FOREIGN KEY (id_client) REFERENCES Client(id),
+    FOREIGN KEY (id_agent) REFERENCES AGENT_IMMO(id)
+);
+
+-- Indexes for better performance
+CREATE INDEX idx_id_client ON Consultation (id_client);
+CREATE INDEX idx_id_agent ON Consultation (id_agent);
+CREATE INDEX idx_date ON Consultation (date);
+CREATE INDEX idx_heure ON Consultation (heure);
