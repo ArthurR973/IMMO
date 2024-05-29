@@ -1,5 +1,5 @@
 function prendreRDV() {
-    window.location.href = 'prendre_rdv.html';
+    window.location.href = 'prendre_RDV.html';
 }
 
 function communiquerAgent() {
