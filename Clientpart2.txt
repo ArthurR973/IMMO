@@ -1,0 +1,11 @@
+INSERT INTO clients (Nom, Prénom, courriel, Mot_de_passe, Adresse_Ligne_1, Ville, Code_Postal, Pays, Numéro_de_téléphone, Type_de_carte_de_paiement, Numéro_de_la_carte, Nom_sur_la_carte, Date_d_expiration_de_la_carte, Code_de_sécurité) 
+VALUES 
+('Karim', 'Benzema', 'karim.benzema@client.com', 'hashed_password123', '110 Avenue des Champs-Élysées', 'Paris', '75008', 'France', '0612345688', 'Visa', '1234567890123456', 'Karim Benzema', '2025-05-31', '123'),
+('Virgil', 'van Dijk', 'virgil.vandijk@client.com', 'hashed_password234', '120 Rue de la Paix', 'Paris', '75002', 'France', '0612345689', 'MasterCard', '2345678901234567', 'Virgil van Dijk', '2025-06-30', '234'),
+('Raheem', 'Sterling', 'raheem.sterling@client.com', 'hashed_password345', '130 Boulevard Haussmann', 'Paris', '75009', 'France', '0612345690', 'Visa', '3456789012345678', 'Raheem Sterling', '2025-07-31', '345'),
+('Antoine', 'Griezmann', 'antoine.griezmann@client.com', 'hashed_password456', '140 Rue de Rennes', 'Paris', '75006', 'France', '0612345691', 'MasterCard', '4567890123456789', 'Antoine Griezmann', '2025-08-31', '456'),
+('Eden', 'Hazard', 'eden.hazard@client.com', 'hashed_password567', '150 Rue du Faubourg Saint-Honoré', 'Paris', '75008', 'France', '0612345692', 'Visa', '5678901234567890', 'Eden Hazard', '2025-09-30', '567'),
+('Harry', 'Kane', 'harry.kane@client.com', 'hashed_password678', '160 Rue de Passy', 'Paris', '75016', 'France', '0612345693', 'MasterCard', '6789012345678901', 'Harry Kane', '2025-10-31', '678'),
+('Paulo', 'Dybala', 'paulo.dybala@client.com', 'hashed_password789', '170 Rue du Bac', 'Paris', '75007', 'France', '0612345694', 'Visa', '7890123456789012', 'Paulo Dybala', '2025-11-30', '789'),
+('Sergio', 'Aguero', 'sergio.aguero@client.com', 'hashed_password890', '180 Rue de Vaugirard', 'Paris', '75015', 'France', '0612345695', 'MasterCard', '8901234567890123', 'Sergio Aguero', '2025-12-31', '890'),
+('Gareth', 'Bale', 'gareth.bale@client.com', 'hashed_password901', '190 Rue du Louvre', 'Paris', '75001', 'France', '0612345696', 'Visa', '9012345678901234', 'Gareth Bale', '2025-01-31', '901');

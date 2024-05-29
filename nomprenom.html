@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - Omnes Immobilier</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f8f9fa;
+        }
+        .container {
+            text-align: center;
+            max-width: 400px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .logo {
+            width: 150px;
+            margin-bottom: 20px;
+        }
+        .error {
+            color: red;
+        }
+        p.terms {
+            font-size: 12px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="logotest.png" alt="Logo Omnes Immobilier" class="logo">
+        <p>Saisis ton nom et ton prénom pour nous rejoindre ou te connecter.</p>
+        <form id="name-form">
+            <div class="form-group">
+                <input type="text" class="form-control" id="name" placeholder="Nom" required>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="surname" placeholder="Prénom" required>
+            </div>
+            <p class="terms">En continuant, tu acceptes les conditions d'utilisation et tu confirmes avoir lu la politique de confidentialité de OMNES IMMOBILIER.</p>
+            <button type="submit" class="btn btn-primary">Continuer</button>
+        </form>
+        <p class="error" id="error-message"></p>
+    </div>
+
+    <script>
+        document.getElementById('name-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const surname = document.getElementById('surname').value;
+            const errorMessage = document.getElementById('error-message');
+
+            // Simulation de la vérification du nom et prénom
+            if (name && surname) {
+                // Redirection vers la page appropriée
+                window.location.href = `tmdp.html?name=${name}&surname=${surname}`;
+            } else {
+                errorMessage.textContent = 'Veuillez saisir votre nom et prénom.';
+            }
+        });
+    </script>
+</body>
+</html>
