@@ -19,7 +19,6 @@ $sql = "SELECT BIEN.numero, BIEN.photo, BIEN.description, BIEN.adresse, AGENT_IM
         WHERE BIEN.type = 'Le terrain'";
 
 $result = $conn->query($sql);
-
 if ($result === FALSE) {
     die("Erreur dans la requête SQL : " . $conn->error);
 }
@@ -54,7 +53,7 @@ if ($result === FALSE) {
             if ($result->num_rows > 0) {
                 while($row = $result->fetch_assoc()) {
                     echo "<div class='property-card'>";
-                    echo "<img src='" . $row["photo"] . "' alt='bien18'>";
+                    echo "<img src='" . $row["photo"] . "' alt='Photo du terrain'>";
                     echo "<h3>" . $row["description"] . "</h3>";
                     echo "<p>Adresse : " . $row["adresse"] . "</p>";
                     echo "<p>Agent : " . $row["prenom"] . " " . $row["nom"] . "</p>";
