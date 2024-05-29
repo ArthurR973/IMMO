@@ -77,7 +77,7 @@
         <a href="tout-parcourir.html">Tout Parcourir</a>
         <a href="#recherche">Recherche</a>
         <a href="#rendez-vous">Rendez-vous</a>
-        <a href="#votre-compte">Votre Compte</a>
+        <a href="nomprenom.html">Votre Compte</a>
     </div>
    
     <div id="accueil" class="section">
