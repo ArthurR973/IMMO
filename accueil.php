@@ -73,7 +73,7 @@
     </div>
    
     <div class="navigation">
-        <a href="accueil.html">Accueil</a>
+        <a href="#accueil">Accueil</a>
         <a href="tout-parcourir.html">Tout Parcourir</a>
         <a href="#recherche">Recherche</a>
         <a href="#rendez-vous">Rendez-vous</a>

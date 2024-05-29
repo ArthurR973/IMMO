@@ -12,14 +12,13 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Requête pour récupérer les biens et leurs agents pour le type "terrain"
+// Requête pour récupérer les biens résidentiels et leurs agents
 $sql = "SELECT BIEN.numero, BIEN.photo, BIEN.description, BIEN.adresse, AGENT_IMMO.prenom, AGENT_IMMO.nom, AGENT_IMMO.courriel, AGENT_IMMO.tel
         FROM BIEN
         JOIN AGENT_IMMO ON BIEN.id_agent = AGENT_IMMO.numero_identification
-        WHERE BIEN.type = 'Le terrain'";
+        WHERE BIEN.type = 'Immobilier résidentiel'";
 
 $result = $conn->query($sql);
-
 if ($result === FALSE) {
     die("Erreur dans la requête SQL : " . $conn->error);
 }
@@ -30,7 +29,7 @@ if ($result === FALSE) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terrain - Omnes Immobilier</title>
+    <title>Immobilier Résidentiel - Omnes Immobilier</title>
     <link rel="stylesheet" href="style_toutparcourir.css">
 </head>
 <body>
@@ -38,8 +37,8 @@ if ($result === FALSE) {
         <h1>Omnes Immobilier</h1>
         <nav>
             <ul>
-                <li><a href="index.html">Accueil</a></li>
-                <li><a href="tout_parcourir.html">Tout Parcourir</a></li>
+                <li><a href="accueil.php">Accueil</a></li>
+                <li><a href="tout_parcourir.php">Tout Parcourir</a></li>
                 <li><a href="recherche.html">Recherche</a></li>
                 <li><a href="rendez_vous.html">Rendez-vous</a></li>
                 <li><a href="votre_compte.html">Votre Compte</a></li>
@@ -48,13 +47,13 @@ if ($result === FALSE) {
     </header>
 
     <main>
-        <h2>Terrain</h2>
+        <h2>Immobilier Résidentiel</h2>
         <div class="property-list">
             <?php
             if ($result->num_rows > 0) {
                 while($row = $result->fetch_assoc()) {
                     echo "<div class='property-card'>";
-                    echo "<img src='" . $row["photo"] . "' alt='bien18'>";
+                    echo "<img src='" . $row["photo"] . "' alt='Photo du bien'>";
                     echo "<h3>" . $row["description"] . "</h3>";
                     echo "<p>Adresse : " . $row["adresse"] . "</p>";
                     echo "<p>Agent : " . $row["prenom"] . " " . $row["nom"] . "</p>";
@@ -64,7 +63,7 @@ if ($result === FALSE) {
                     echo "</div>";
                 }
             } else {
-                echo "<p>Aucun terrain trouvé.</p>";
+                echo "<p>Aucun bien immobilier résidentiel trouvé.</p>";
             }
             $conn->close();
             ?>
