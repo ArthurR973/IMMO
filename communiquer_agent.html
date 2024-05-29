@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Communiquer avec l'agent - Thierry MARX</title>
+    <link rel="stylesheet" href="communiquer_agent.css">
+    <script src="communiquer_agent.js" defer></script>
+</head>
+<body>
+    <div class="chat-container">
+        <header>
+            <h1>Communiquer avec Thierry MARX</h1>
+        </header>
+        <div class="chat-window">
+            <div id="messages" class="messages"></div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="message-input" placeholder="Tapez votre message...">
+            <button onclick="sendMessage()">Envoyer</button>
+        </div>
+        <div class="communication-options">
+            <button onclick="startAudioCall()">Appel Audio</button>
+            <button onclick="startVideoCall()">Appel Vidéo</button>
+            <button onclick="sendEmail()">Envoyer un Email</button>
+        </div>
+    </div>
+</body>
+</html>

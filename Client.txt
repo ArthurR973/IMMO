@@ -1,7 +1,12 @@
-CREATE TABLE CLIENT (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nom VARCHAR(100) NOT NULL,
-    prenom VARCHAR(100),
-    tel VARCHAR(20),
-    courriel VARCHAR(100)
-);
+INSERT INTO clients (Nom, Prénom, Email, Mot_de_passe, Adresse_Ligne_1, Ville, Code_Postal, Pays, Numéro_de_téléphone, Type_de_carte_de_paiement, Numéro_de_la_carte, Nom_sur_la_carte, Date_d_expiration_de_la_carte, Code_de_sécurité) 
+VALUES 
+('Lionel', 'Messi', 'lionel.messi@client.com', 'hashed_password123', '10 Rue de Rivoli', 'Paris', '75001', 'France', '0612345678', 'Visa', '1234567890123456', 'Lionel Messi', '2025-05-31', '123'),
+('Cristiano', 'Ronaldo', 'cristiano.ronaldo@client.com', 'hashed_password234', '20 Avenue des Champs-Élysées', 'Paris', '75008', 'France', '0612345679', 'MasterCard', '2345678901234567', 'Cristiano Ronaldo', '2025-06-30', '234'),
+('Neymar', 'Jr', 'neymar.jr@client.com', 'hashed_password345', '30 Rue de la Paix', 'Paris', '75002', 'France', '0612345680', 'Visa', '3456789012345678', 'Neymar Jr', '2025-07-31', '345'),
+('Kylian', 'Mbappé', 'kylian.mbappe@client.com', 'hashed_password456', '40 Boulevard Haussmann', 'Paris', '75009', 'France', '0612345681', 'MasterCard', '4567890123456789', 'Kylian Mbappé', '2025-08-31', '456'),
+('Robert', 'Lewandowski', 'robert.lewandowski@client.com', 'hashed_password567', '50 Rue de Rennes', 'Paris', '75006', 'France', '0612345682', 'Visa', '5678901234567890', 'Robert Lewandowski', '2025-09-30', '567'),
+('Kevin', 'De Bruyne', 'kevin.debruyne@client.com', 'hashed_password678', '60 Rue du Faubourg Saint-Honoré', 'Paris', '75008', 'France', '0612345683', 'MasterCard', '6789012345678901', 'Kevin De Bruyne', '2025-10-31', '678'),
+('Mohamed', 'Salah', 'mohamed.salah@client.com', 'hashed_password789', '70 Rue de Passy', 'Paris', '75016', 'France', '0612345684', 'Visa', '7890123456789012', 'Mohamed Salah', '2025-11-30', '789'),
+('Sadio', 'Mané', 'sadio.mane@client.com', 'hashed_password890', '80 Rue du Bac', 'Paris', '75007', 'France', '0612345685', 'MasterCard', '8901234567890123', 'Sadio Mané', '2025-12-31', '890'),
+('Sergio', 'Ramos', 'sergio.ramos@client.com', 'hashed_password901', '90 Rue de Vaugirard', 'Paris', '75015', 'France', '0612345686', 'Visa', '9012345678901234', 'Sergio Ramos', '2025-01-31', '901'),
+('Luka', 'Modrić', 'luka.modric@client.com', 'hashed_password012', '100 Rue du Louvre', 'Paris', '75001', 'France', '0612345687', 'MasterCard', '0123456789012345', 'Luka Modrić', '2025-02-28', '012');

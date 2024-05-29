@@ -1,0 +1,86 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.agent-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    padding: 20px;
+    max-width: 800px;
+    width: 100%;
+    text-align: center;
+}
+
+.agent-card h2 {
+    margin-bottom: 20px;
+}
+
+.schedule {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.schedule th, .schedule td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+.schedule th {
+    width: 100px; /* Ajuster la largeur des colonnes horaires */
+}
+
+.schedule .free {
+    background-color: white;
+    cursor: pointer;
+}
+
+.schedule .busy {
+    background-color: black;
+    color: white;
+}
+
+.schedule.large th, .schedule.large td {
+    padding: 15px;
+    font-size: 18px;
+}
+
+.schedule.large .free:hover {
+    background-color: #ddd;
+}
+
+.selected {
+    background-color: #28a745;
+    color: white;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.buttons .btn {
+    display: inline-block;
+    margin: 10px;
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.buttons .btn:hover {
+    background-color: #0056b3;
+}
