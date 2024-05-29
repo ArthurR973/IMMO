@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prendre un RDV - Thierry MARX</title>
-    <link rel="stylesheet" href="agents.css">
+    <link rel="stylesheet" href="prendre_RDV.css">
     <script src="prendre_RDV.js" defer></script>
 </head>
 <body>
@@ -13,8 +13,7 @@
         <table class="schedule large">
             <thead>
                 <tr>
-                    <th>Spécialité</th>
-                    <th>Agent</th>
+                    <th>Horaires</th>
                     <th>Lundi</th>
                     <th>Mardi</th>
                     <th>Mercredi</th>
@@ -25,8 +24,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>Immobilier</td>
-                    <td>Thierry</td>
+                    <td>9H - 12H</td>
                     <td class="busy"></td>
                     <td class="free"></td>
                     <td class="free"></td>
@@ -35,8 +33,7 @@
                     <td class="busy"></td>
                 </tr>
                 <tr>
-                    <td>résidentiel</td>
-                    <td>MARX</td>
+                    <td>13H30 - 15H30</td>
                     <td class="free"></td>
                     <td class="busy"></td>
                     <td class="free"></td>
@@ -46,8 +43,10 @@
                 </tr>
             </tbody>
         </table>
-        <button class="btn" onclick="saveAppointment()">Enregistrer le RDV</button>
-        <button class="btn" onclick="cancelAppointment()">Annuler le RDV</button>
+        <div class="buttons">
+            <button class="btn" onclick="saveAppointment()">Enregistrer le RDV</button>
+            <button class="btn" onclick="cancelAppointment()">Annuler le RDV</button>
+        </div>
     </div>
 </body>
 </html>

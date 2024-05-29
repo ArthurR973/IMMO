@@ -7,17 +7,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Afficher le planning complet
     const largeSchedule = document.querySelector('.schedule.large tbody');
-    scheduleData.forEach((row, index) => {
+    largeSchedule.innerHTML = ''; // Clear any existing rows
+    scheduleData.forEach((row, rowIndex) => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-            <td>${index === 0 ? 'Immobilier' : 'résidentiel'}</td>
-            <td>${index === 0 ? 'Thierry' : 'MARX'}</td>
+            <td>${rowIndex === 0 ? '9H - 12H' : '13H30 - 15H30'}</td>
         `;
-        row.forEach((cell, i) => {
+        row.forEach((cell, colIndex) => {
             const td = document.createElement('td');
             td.className = cell;
             if (cell === 'free') {
-                td.addEventListener('click', () => selectTimeSlot(td, index, i));
+                td.addEventListener('click', () => selectTimeSlot(td, rowIndex, colIndex));
             }
             tr.appendChild(td);
         });
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Fonction pour envoyer la requête au serveur
     function sendRequest(action) {
         const rowIndex = selectedSlot.parentNode.rowIndex - 1;
-        const colIndex = selectedSlot.cellIndex - 2;
+        const colIndex = selectedSlot.cellIndex - 1;
 
         // Envoyer les données au serveur via AJAX
         const xhr = new XMLHttpRequest();
