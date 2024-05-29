@@ -37,7 +37,7 @@ if ($result === FALSE) {
         <h1>Omnes Immobilier</h1>
         <nav>
             <ul>
-                <li><a href="index.html">Accueil</a></li>
+                <li><a href="accueil.php">Accueil</a></li>
                 <li><a href="tout_parcourir.html">Tout Parcourir</a></li>
                 <li><a href="recherche.html">Recherche</a></li>
                 <li><a href="rendez_vous.html">Rendez-vous</a></li>
