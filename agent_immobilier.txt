@@ -1,0 +1,48 @@
+CREATE TABLE AGENT_IMMO (
+    numero_identification INT PRIMARY KEY,
+    mot_de_passe VARCHAR(255) NOT NULL,
+    nom VARCHAR(100) NOT NULL,
+    prenom VARCHAR(100) NOT NULL,
+    specialite VARCHAR(255),
+    disponibilites TEXT,
+    video VARCHAR(255),
+    photo VARCHAR(255),
+    cv VARCHAR(255),
+    tel VARCHAR(20),
+    bureau VARCHAR(255),
+    courriel VARCHAR(100),
+    honoraire DECIMAL(10, 2)
+);
+
+-- Inserting 20 agents into the AGENT_IMMO table
+
+INSERT INTO AGENT_IMMO (
+    numero_identification, mot_de_passe, nom, prenom, specialite, disponibilites, video, photo, cv, tel, bureau, courriel, honoraire
+) VALUES
+-- Immobilier résidentiel
+(11, '11', 'DARROZE', 'HELENE', 'Immobilier résidentiel', 'Agenda', 'helene_darroze.mp4', 'helene_darroze.jpg', 'cv.pdf', '0101010111', 'Bureau 1', 'helene@omnesimmobilier', 12.00),
+(12, '12', 'SACKO', 'MORY', 'Immobilier résidentiel', 'Agenda', 'mory_sacko.mp4', 'mory_sacko.jpg', 'cv.pdf', '0101010112', 'Bureau 1', 'mory@omnesimmobilier', 12.00),
+(13, '13', 'ETSCHEBEST', 'PHILIPE', 'Immobilier résidentiel', 'Agenda', 'philipe_etschebest.mp4', 'philipe_etschebest.jpg', 'cv.pdf', '0101010113', 'Bureau 1', 'philipe@omnesimmobilier', 12.00),
+(14, '14', 'MARX', 'THIERRY', 'Immobilier résidentiel', 'Agenda', 'thierry_marx.mp4', 'thierry_marx.jpg', 'cv.pdf', '0101010114', 'Bureau 1', 'thierry@omnesimmobilier', 12.00),
+(15, '15', 'RAMSAY', 'GORDON', 'Immobilier résidentiel', 'Agenda', 'gordon_ramsay.mp4', 'gordon_ramsay.jpg', 'cv.pdf', '0101010115', 'Bureau 1', 'gordon@omnesimmobilier', 12.00),
+
+-- Immobilier commercial
+(21, '21', 'LAVOINE', 'MARC', 'Immobilier commercial', 'Agenda', 'marc_lavoine.mp4', 'marc_lavoine.jpg', 'cv.pdf', '0102020121', 'Bureau 2', 'marc@omnesimmobilier', 13.00),
+(22, '22', 'ELVIS', 'ANGÈLE', 'Immobilier commercial', 'Agenda', 'angele_elvis.mp4', 'angele_elvis.jpg', 'cv.pdf', '0102020122', 'Bureau 2', 'angele@omnesimmobilier', 13.00),
+(23, '23', 'DUCHAUT', 'AURELSAN', 'Immobilier commercial', 'Agenda', 'aurelsan_duchaut.mp4', 'aurelsan_duchaut.jpg', 'cv.pdf', '0102020123', 'Bureau 2', 'aurelsan@omnesimmobilier', 13.00),
+(24, '24', 'BOUADJIE', 'TAYC', 'Immobilier commercial', 'Agenda', 'tayc_bouadjie.mp4', 'tayc_bouadjie.jpg', 'cv.pdf', '0102020124', 'Bureau 2', 'tayc@omnesimmobilier', 13.00),
+(25, '25', 'GRANDE', 'ARIANA', 'Immobilier commercial', 'Agenda', 'ariana_grande.mp4', 'ariana_grande.jpg', 'cv.pdf', '0102020125', 'Bureau 2', 'ariana@omnesimmobilier', 13.00),
+
+-- Appartement à louer
+(31, '31', 'PLAZZA', 'STEPHAN', 'Appartement à louer', 'Agenda', 'stephan_plazza.mp4', 'stephan_plazza.jpg', 'cv.pdf', '0103030131', 'Bureau 3', 'stephan@omnesimmobilier', 14.00),
+(32, '32', 'VAUDRU', 'JOSIANE', 'Appartement à louer', 'Agenda', 'josiane_vaudru.mp4', 'josiane_vaudru.jpg', 'cv.pdf', '0103030132', 'Bureau 3', 'josiane@omnesimmobilier', 14.00),
+(33, '33', 'BROLA', 'ANTOINE', 'Appartement à louer', 'Agenda', 'antoine_brola.mp4', 'antoine_brola.jpg', 'cv.pdf', '0103030133', 'Bureau 3', 'antoine@omnesimmobilier', 14.00),
+(34, '34', 'DUBULE', 'VINCENT', 'Appartement à louer', 'Agenda', 'vincent_dubule.mp4', 'vincent_dubule.jpg', 'cv.pdf', '0103030134', 'Bureau 3', 'vincent@omnesimmobilier', 14.00),
+(35, '35', 'LERMITE', 'THIERRY', 'Appartement à louer', 'Agenda', 'thierry_lermite.mp4', 'thierry_lermite.jpg', 'cv.pdf', '0103030135', 'Bureau 3', 'thierry@omnesimmobilier', 14.00),
+
+-- Le terrain
+(41, '41', 'ADAMS', 'KEV', 'Le terrain', 'Agenda', 'kev_adams.mp4', 'kev_adams.jpg', 'cv.pdf', '0104040141', 'Bureau 4', 'kev@omnesimmobilier', 15.00),
+(42, '42', 'NGIJOL', 'THOMAS', 'Le terrain', 'Agenda', 'thomas_ngijol.mp4', 'thomas_ngijol.jpg', 'cv.pdf', '0104040142', 'Bureau 4', 'thomas@omnesimmobilier', 15.00),
+(43, '43', 'JUDOR', 'ERIC', 'Le terrain', 'Agenda', 'eric_judor.mp4', 'eric_judor.jpg', 'cv.pdf', '0104040143', 'Bureau 4', 'eric@omnesimmobilier', 15.00),
+(44, '44', 'SYLLA', 'AHMED', 'Le terrain', 'Agenda', 'ahmed_sylla.mp4', 'ahmed_sylla.jpg', 'cv.pdf', '0104040144', 'Bureau 4', 'ahmed@omnesimmobilier', 15.00),
+(45, '45', 'FORESTI', 'FLORENCE', 'Le terrain', 'Agenda', 'florence_foresti.mp4', 'florence_foresti.jpg', 'cv.pdf', '0104040145', 'Bureau 4', 'florence@omnesimmobilier', 15.00);

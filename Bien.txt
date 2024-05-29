@@ -1,0 +1,36 @@
+CREATE TABLE BIEN (
+    type VARCHAR(255),
+    numero INT PRIMARY KEY,
+    photo VARCHAR(255),
+    description TEXT,
+    adresse VARCHAR(255),
+    id_agent INT,
+    FOREIGN KEY (id_agent) REFERENCES AGENT_IMMO(numero_identification)
+);
+
+-- Inserting 20 biens into the BIEN table with descriptions
+
+INSERT INTO BIEN (type, numero, photo, description, adresse, id_agent) VALUES
+('Immobilier résidentiel', 11, 'bien1.jpg', 'Maison spacieuse avec jardin et piscine, située dans un quartier calme.', '1 Rue de la Paix, 75001 Paris', 11),
+('Immobilier résidentiel', 12, 'bien2.jpg', 'Appartement moderne avec vue sur la ville, proche des commerces.', '2 Avenue des Champs, 75008 Paris', 12),
+('Immobilier résidentiel', 13, 'bien3.jpg', 'Charmant duplex rénové avec terrasse, idéal pour une famille.', '3 Boulevard Saint-Michel, 75005 Paris', 13),
+('Immobilier résidentiel', 14, 'bien4.jpg', 'Villa de luxe avec grand terrain, proche des écoles et transports.', '4 Rue de Rivoli, 75004 Paris', 14),
+('Immobilier résidentiel', 15, 'bien5.jpg', 'Appartement cosy avec balcon, situé au cœur du centre-ville.', '5 Place de la Concorde, 75008 Paris', 15),
+
+('Immobilier commercial', 21, 'bien6.jpg', 'Local commercial spacieux avec grandes vitrines, idéal pour boutique.', '6 Rue du Commerce, 75015 Paris', 21),
+('Immobilier commercial', 22, 'bien7.jpg', 'Bureaux modernes équipés de toutes les commodités, proche des transports.', '7 Avenue de la République, 75011 Paris', 22),
+('Immobilier commercial', 23, 'bien8.jpg', 'Entrepôt avec grande capacité de stockage, accès facile aux autoroutes.', '8 Rue de l\'Industrie, 75010 Paris', 23),
+('Immobilier commercial', 24, 'bien9.jpg', 'Restaurant clé en main avec cuisine équipée, excellent emplacement.', '9 Boulevard Haussmann, 75009 Paris', 24),
+('Immobilier commercial', 25, 'bien10.jpg', 'Centre d’affaires avec salles de réunion, idéal pour start-ups.', '10 Rue de la Victoire, 75009 Paris', 25),
+
+('Appartement à louer', 31, 'bien11.jpg', 'Studio meublé avec kitchenette, proche des universités.', '11 Rue des Écoles, 75005 Paris', 31),
+('Appartement à louer', 32, 'bien12.jpg', 'Appartement T2 avec terrasse, lumineux et calme.', '12 Rue Montmartre, 75002 Paris', 32),
+('Appartement à louer', 33, 'bien13.jpg', 'Grand T3 avec cuisine équipée, idéal pour colocation.', '13 Rue de Rennes, 75006 Paris', 33),
+('Appartement à louer', 34, 'bien14.jpg', 'Appartement rénové avec parquet, situé dans un quartier vivant.', '14 Rue Oberkampf, 75011 Paris', 34),
+('Appartement à louer', 35, 'bien15.jpg', 'Loft spacieux avec mezzanine, parfait pour un artiste.', '15 Rue de Belleville, 75020 Paris', 35),
+
+('Le terrain', 41, 'bien16.jpg', 'Terrain constructible avec permis de construire, proche du centre-ville.', '16 Rue des Champs, 75016 Paris', 41),
+('Le terrain', 42, 'bien17.jpg', 'Terrain agricole avec source d’eau, idéal pour projet écologique.', '17 Chemin de la Ferme, 75018 Paris', 42),
+('Le terrain', 43, 'bien18.jpg', 'Terrain à bâtir avec vue dégagée, dans une zone résidentielle prisée.', '18 Rue du Panorama, 75019 Paris', 43),
+('Le terrain', 44, 'bien19.jpg', 'Grand terrain avec potentiel de lotissement, accès facile aux commodités.', '19 Route de Versailles, 75016 Paris', 44),
+('Le terrain', 45, 'bien20.jpg', 'Terrain boisé avec belle nature environnante, idéal pour résidence secondaire.', '20 Allée des Chênes, 75012 Paris', 45);
