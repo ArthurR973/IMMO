@@ -1,12 +1,22 @@
-INSERT INTO clients (Nom, Prénom, Email, Mot_de_passe, Adresse_Ligne_1, Ville, Code_Postal, Pays, Numéro_de_téléphone, Type_de_carte_de_paiement, Numéro_de_la_carte, Nom_sur_la_carte, Date_d_expiration_de_la_carte, Code_de_sécurité) 
+INSERT INTO clients (Nom, Prénom, courriel, Mot_de_passe, Adresse_Ligne_1, Ville, Code_Postal, Pays, Numéro_de_téléphone, Type_de_carte_de_paiement, Numéro_de_la_carte, Nom_sur_la_carte, Date_d_expiration_de_la_carte, Code_de_sécurité) 
 VALUES 
-('Lionel', 'Messi', 'lionel.messi@client.com', 'hashed_password123', '10 Rue de Rivoli', 'Paris', '75001', 'France', '0612345678', 'Visa', '1234567890123456', 'Lionel Messi', '2025-05-31', '123'),
-('Cristiano', 'Ronaldo', 'cristiano.ronaldo@client.com', 'hashed_password234', '20 Avenue des Champs-Élysées', 'Paris', '75008', 'France', '0612345679', 'MasterCard', '2345678901234567', 'Cristiano Ronaldo', '2025-06-30', '234'),
-('Neymar', 'Jr', 'neymar.jr@client.com', 'hashed_password345', '30 Rue de la Paix', 'Paris', '75002', 'France', '0612345680', 'Visa', '3456789012345678', 'Neymar Jr', '2025-07-31', '345'),
-('Kylian', 'Mbappé', 'kylian.mbappe@client.com', 'hashed_password456', '40 Boulevard Haussmann', 'Paris', '75009', 'France', '0612345681', 'MasterCard', '4567890123456789', 'Kylian Mbappé', '2025-08-31', '456'),
-('Robert', 'Lewandowski', 'robert.lewandowski@client.com', 'hashed_password567', '50 Rue de Rennes', 'Paris', '75006', 'France', '0612345682', 'Visa', '5678901234567890', 'Robert Lewandowski', '2025-09-30', '567'),
-('Kevin', 'De Bruyne', 'kevin.debruyne@client.com', 'hashed_password678', '60 Rue du Faubourg Saint-Honoré', 'Paris', '75008', 'France', '0612345683', 'MasterCard', '6789012345678901', 'Kevin De Bruyne', '2025-10-31', '678'),
-('Mohamed', 'Salah', 'mohamed.salah@client.com', 'hashed_password789', '70 Rue de Passy', 'Paris', '75016', 'France', '0612345684', 'Visa', '7890123456789012', 'Mohamed Salah', '2025-11-30', '789'),
-('Sadio', 'Mané', 'sadio.mane@client.com', 'hashed_password890', '80 Rue du Bac', 'Paris', '75007', 'France', '0612345685', 'MasterCard', '8901234567890123', 'Sadio Mané', '2025-12-31', '890'),
-('Sergio', 'Ramos', 'sergio.ramos@client.com', 'hashed_password901', '90 Rue de Vaugirard', 'Paris', '75015', 'France', '0612345686', 'Visa', '9012345678901234', 'Sergio Ramos', '2025-01-31', '901'),
-('Luka', 'Modrić', 'luka.modric@client.com', 'hashed_password012', '100 Rue du Louvre', 'Paris', '75001', 'France', '0612345687', 'MasterCard', '0123456789012345', 'Luka Modrić', '2025-02-28', '012');
+('Lionel', 'Messi', 'lionel.messi@client.com', '123', '10 Rue de Rivoli', 'Paris', '75001', 'France', '0612345678', 'Visa', '1234567890123456', 'Lionel Messi', '2025-05-31', '123'),
+('Cristiano', 'Ronaldo', 'cristiano.ronaldo@client.com', '234', '20 Avenue des Champs-Élysées', 'Paris', '75008', 'France', '0612345679', 'MasterCard', '2345678901234567', 'Cristiano Ronaldo', '2025-06-30', '234'),
+('Neymar', 'Jr', 'neymar.jr@client.com', '345', '30 Rue de la Paix', 'Paris', '75002', 'France', '0612345680', 'Visa', '3456789012345678', 'Neymar Jr', '2025-07-31', '345'),
+('Kylian', 'Mbappé', 'kylian.mbappe@client.com', '456', '40 Boulevard Haussmann', 'Paris', '75009', 'France', '0612345681', 'MasterCard', '4567890123456789', 'Kylian Mbappé', '2025-08-31', '456'),
+('Robert', 'Lewandowski', 'robert.lewandowski@client.com', '567', '50 Rue de Rennes', 'Paris', '75006', 'France', '0612345682', 'Visa', '5678901234567890', 'Robert Lewandowski', '2025-09-30', '567'),
+('Kevin', 'De Bruyne', 'kevin.debruyne@client.com', '678', '60 Rue du Faubourg Saint-Honoré', 'Paris', '75008', 'France', '0612345683', 'MasterCard', '6789012345678901', 'Kevin De Bruyne', '2025-10-31', '678'),
+('Mohamed', 'Salah', 'mohamed.salah@client.com', '789', '70 Rue de Passy', 'Paris', '75016', 'France', '0612345684', 'Visa', '7890123456789012', 'Mohamed Salah', '2025-11-30', '789'),
+('Sadio', 'Mané', 'sadio.mane@client.com', '890', '80 Rue du Bac', 'Paris', '75007', 'France', '0612345685', 'MasterCard', '8901234567890123', 'Sadio Mané', '2025-12-31', '890'),
+('Sergio', 'Ramos', 'sergio.ramos@client.com', '901', '90 Rue de Vaugirard', 'Paris', '75015', 'France', '0612345686', 'Visa', '9012345678901234', 'Sergio Ramos', '2025-01-31', '901'),
+('Luka', 'Modrić', 'luka.modric@client.com', '012', '100 Rue du Louvre', 'Paris', '75001', 'France', '0612345687', 'MasterCard', '0123456789012345', 'Luka Modrić', '2025-02-28', '012'),
+('Karim', 'Benzema', 'karim.benzema@client.com', '123', '110 Avenue des Champs-Élysées', 'Paris', '75008', 'France', '0612345688', 'Visa', '1234567890123456', 'Karim Benzema', '2025-05-31', '123'),
+('Virgil', 'van Dijk', 'virgil.vandijk@client.com', '234', '120 Rue de la Paix', 'Paris', '75002', 'France', '0612345689', 'MasterCard', '2345678901234567', 'Virgil van Dijk', '2025-06-30', '234'),
+('Raheem', 'Sterling', 'raheem.sterling@client.com', '345', '130 Boulevard Haussmann', 'Paris', '75009', 'France', '0612345690', 'Visa', '3456789012345678', 'Raheem Sterling', '2025-07-31', '345'),
+('Antoine', 'Griezmann', 'antoine.griezmann@client.com', '456', '140 Rue de Rennes', 'Paris', '75006', 'France', '0612345691', 'MasterCard', '4567890123456789', 'Antoine Griezmann', '2025-08-31', '456'),
+('Eden', 'Hazard', 'eden.hazard@client.com', '567', '150 Rue du Faubourg Saint-Honoré', 'Paris', '75008', 'France', '0612345692', 'Visa', '5678901234567890', 'Eden Hazard', '2025-09-30', '567'),
+('Harry', 'Kane', 'harry.kane@client.com', '678', '160 Rue de Passy', 'Paris', '75016', 'France', '0612345693', 'MasterCard', '6789012345678901', 'Harry Kane', '2025-10-31', '678'),
+('Paulo', 'Dybala', 'paulo.dybala@client.com', '789', '170 Rue du Bac', 'Paris', '75007', 'France', '0612345694', 'Visa', '7890123456789012', 'Paulo Dybala', '2025-11-30', '789'),
+('Sergio', 'Aguero', 'sergio.aguero@client.com', '890', '180 Rue de Vaugirard', 'Paris', '75015', 'France', '0612345695', 'MasterCard', '8901234567890123', 'Sergio Aguero', '2025-12-31', '890'),
+('Gareth', 'Bale', 'gareth.bale@client.com', '901', '190 Rue du Louvre', 'Paris', '75001', 'France', '0612345696', 'Visa', '9012345678901234', 'Gareth Bale', '2025-01-31', '901'),
+('Zinedine', 'Zidane', 'zinedine.zidane@client.com', '345', '150 Avenue des Champs-Élysées', 'Paris', '75008', 'France', '0612345698', 'Visa', '4567890123456789', 'Zinedine Zidane', '2025-08-31', '456');
