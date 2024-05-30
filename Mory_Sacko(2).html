@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Immobilier - Mory SACKO</title>
+    <link rel="stylesheet" href="agents.css">
+    <script src="agents.js" defer></script>
+</head>
+<body>
+    <div class="agent-card">
+        <img src="mory_sacko.jpg" alt="Photo de l'agent">
+        <div class="agent-details">
+            <h2>Mory SACKO</h2>
+            <p class="agent-title">Agent Immobilier agréé</p>
+            <p><strong>Téléphone:</strong> +33 01 23 45 67 91</p>
+            <p><strong>Email:</strong> <a href="mailto:mory.sacko@omnesimmobilier.fr">mory.sacko@omnesimmobilier.fr</a></p>
+        </div>
+        <table class="schedule">
+            <thead>
+                <tr>
+                    <th>Lundi</th>
+                    <th>Mardi</th>
+                    <th>Mercredi</th>
+                    <th>Jeudi</th>
+                    <th>Vendredi</th>
+                    <th>Samedi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="busy"></td>
+                    <td class="free"></td>
+                    <td class="busy"></td>
+                    <td class="free"></td>
+                    <td class="busy"></td>
+                    <td class="free"></td>
+                </tr>
+                <tr>
+                    <td class="free"></td>
+                    <td class="busy"></td>
+                    <td class="free"></td>
+                    <td class="busy"></td>
+                    <td class="free"></td>
+                    <td class="busy"></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="buttons">
+            <button class="btn" onclick="prendreRDV()">Prendre un RDV</button>
+            <button class="btn" onclick="communiquerAgent()">Communiquer avec l'agent immobilier</button>
+            <button class="btn" onclick="voirCV()">Voir son CV</button>
+        </div>
+    </div>
+</body>
+</html>
