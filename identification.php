@@ -82,7 +82,8 @@
 </head>
 <body>
     <div class="container">
-        <img src="logotest.png" alt="Logo Omnes Immobilier" class="logo">
+    <a href="accueil.php">
+        <img src="logotest.png" alt="Logo Omnes Immobilier" class="logo"></a>
 
         <p>Saisis ton nom et ton prénom pour nous rejoindre ou te connecter.</p>
         <form id="name-form" method="post">
