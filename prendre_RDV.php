@@ -2,19 +2,23 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "nom_de_votre_base_de_donnees";
+$dbname = "projet_piscine"; // Remplacez par le nom correct de votre base de données
 
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
-    echo "Connection failed: " . $e->getMessage();
+    die("Connection failed: " . $e->getMessage());
 }
 
 function getScheduleData($conn) {
-    $stmt = $conn->prepare("SELECT date, heure FROM Consultation WHERE id_agent = :id_agent");
-    $stmt->execute(['id_agent' => 14]); // Remplacez 14 par l'ID de l'agent concerné
-    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    try {
+        $stmt = $conn->prepare("SELECT date, heure FROM Consultation WHERE id_agent = :id_agent");
+        $stmt->execute(['id_agent' => 14]); // Remplacez 14 par l'ID de l'agent concerné
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        die("Query failed: " . $e->getMessage());
+    }
     
     $scheduleData = [
         ['busy', 'free', 'free', 'busy', 'busy', 'busy'],
@@ -23,7 +27,6 @@ function getScheduleData($conn) {
     
     foreach ($results as $row) {
         // Convertir la date et l'heure en indices de ligne et de colonne
-        // Par exemple, si 9H - 12H est en rowIndex 0 et 13H30 - 15H30 est en rowIndex 1
         $rowIndex = $row['heure'] == '09:00:00' ? 0 : 1;
         $colIndex = date('N', strtotime($row['date'])) - 1;
         $scheduleData[$rowIndex][$colIndex] = 'busy';

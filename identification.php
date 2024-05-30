@@ -1,3 +1,21 @@
+<?php
+session_start();
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Récupérez les données du formulaire
+    $Nom = $_POST['name'];
+    $Prénom = $_POST['surname'];
+
+    // Stockez ces valeurs dans la session
+    $_SESSION['name'] = $Nom;
+    $_SESSION['surname'] = $Prénom;
+
+    // Redirigez vers client_connexion.php
+    header("Location: client_connexion.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -87,7 +105,7 @@
 </head>
 <body>
     <div class="container">
-    <a href="accueil.php">
+        <a href="accueil.php">
         <img src="logotest.png" alt="Logo Omnes Immobilier" class="logo"></a>
 
         <p>Saisis ton nom et ton prénom pour nous rejoindre ou te connecter.</p>
@@ -114,7 +132,7 @@
                 $sql = "SELECT * FROM clients WHERE Nom = '$Nom' AND Prénom = '$Prénom'";
                 $result = $conn->query($sql);
                 if ($result->num_rows > 0) {
-                    header("Location: client_connexion.html");
+                    header("Location: client_connexion.php");
                     exit();
                 } else {
                     $sql_admin = "SELECT * FROM administrateur WHERE nom = '$Nom' AND prenom = '$Prénom'";
