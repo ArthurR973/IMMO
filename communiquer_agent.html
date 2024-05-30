@@ -5,12 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Communiquer avec l'agent - Thierry MARX</title>
     <link rel="stylesheet" href="communiquer_agent.css">
-    <script src="communiquer_agent.js" defer></script>
+    <script defer>
+        function fetchAgentInfo(agentId) {
+            fetch('get_agent_info.php?id=' + agentId) // Assurez-vous d'ajuster l'URL de l'API selon votre configuration
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('agent-name').innerText = data.nom + ' ' + data.prenom;
+                })
+                .catch(error => console.error('Erreur lors de la récupération des informations de l\'agent :', error));
+        }
+
+        function sendMessage() {
+            // Votre fonction sendMessage existante
+        }
+
+        function startAudioCall() {
+            // Votre fonction startAudioCall existante
+        }
+
+        function startVideoCall() {
+            // Votre fonction startVideoCall existante
+        }
+
+        function sendEmail() {
+            // Votre fonction sendEmail existante
+        }
+    </script>
 </head>
 <body>
     <div class="chat-container">
         <header>
-            <h1>Communiquer avec Thierry MARX</h1>
+            <h1>Communiquer avec <span id="agent-name">...</span></h1>
         </header>
         <div class="chat-window">
             <div id="messages" class="messages"></div>
@@ -20,9 +45,11 @@
             <button onclick="sendMessage()">Envoyer</button>
         </div>
         <div class="communication-options">
-            <button onclick="startAudioCall()">Appel Audio</button>
-            <button onclick="startVideoCall()">Appel Vidéo</button>
-            <button onclick="sendEmail()">Envoyer un Email</button>
+            <!-- Ajoutez un attribut data-agent-id contenant l'ID de l'agent -->
+            <button onclick="fetchAgentInfo(11)" data-agent-id="11">Hélène Darroze</button>
+            <button onclick="fetchAgentInfo(12)" data-agent-id="12">Mory Sacko</button>
+            <button onclick="fetchAgentInfo(13)" data-agent-id="13">Philipe Etschebest</button>
+            <!-- Continuez avec d'autres agents -->
         </div>
     </div>
 </body>

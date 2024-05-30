@@ -32,22 +32,94 @@ $agent = $result->fetch_assoc();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $agent['prenom'] . " " . $agent['nom']; ?> - Omnes Immobilier</title>
     <link rel="stylesheet" href="style_agent.css">
+    <style>
+        body {
+            font-family: 'Lora', serif;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header, .footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            width: 100%;
+        }
+        .header h1, .footer p {
+            font-family: 'Montserrat', sans-serif;
+        }
+        .navigation {
+            background-color: #f8f9fa;
+            padding: 10px;
+            text-align: center;
+            width: 100%;
+        }
+        .navigation a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+        .navigation a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        .container {
+            padding: 50px 20px;
+            width: 100%;
+            max-width: 1200px;
+            text-align: center;
+        }
+        .agent-profile img {
+            max-width: 200px;
+            height: auto;
+            border-radius: 50%;
+        }
+        .agent-profile h2 {
+            margin: 10px 0;
+        }
+        .agent-profile table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 80%;
+        }
+        .agent-profile th, .agent-profile td {
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 5px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <header>
+    <div class="header">
         <h1>Omnes Immobilier</h1>
-        <nav>
-            <ul>
-                <li><a href="accueil.php">Accueil</a></li>
-                <li><a href="tout_parcourir.php">Tout Parcourir</a></li>
-                <li><a href="recherche.php">Recherche</a></li>
-                <li><a href="rendez_vous.html">Rendez-vous</a></li>
-                <li><a href="identification.php">Votre Compte</a></li>
-            </ul>
-        </nav>
-    </header>
+    </div>
 
-    <main>
+    <div class="navigation">
+        <a href="accueil.php">Accueil</a>
+        <a href="tout_parcourir.php">Tout Parcourir</a>
+        <a href="recherche.php">Recherche</a>
+        <a href="rendez_vous.html">Rendez-vous</a>
+        <a href="identification.php">Votre Compte</a>
+    </div>
+
+    <div class="container">
         <div class="agent-profile">
             <img src="<?php echo $agent['photo']; ?>" alt="Photo de <?php echo $agent['prenom'] . " " . $agent['nom']; ?>">
             <h2><?php echo $agent['prenom'] . " " . $agent['nom']; ?></h2>
@@ -89,15 +161,15 @@ $agent = $result->fetch_assoc();
             </table>
             <div class="buttons">
                 <a href="identification.php" class="button">Prendre un RDV</a>
-                <a href="mailto:<?php echo $agent['courriel']; ?>" class="button">Communiquer avec l'agent immobilier</a>
+                <a href="communiquer_agent.php?agent_id=<?php echo $agent['numero_identification']; ?>" class="button">Communiquer avec l'agent immobilier</a>
                 <a href="<?php echo $agent['cv']; ?>" class="button">Voir son CV</a>
             </div>
         </div>
-    </main>
+    </div>
 
-    <footer>
+    <div class="footer">
         <p>Contactez-nous : <a href="mailto:contact@omnesimmobilier.fr">contact@omnesimmobilier.fr</a></p>
         <p>Téléphone : +33 01 23 45 67 89</p>
-    </footer>
+    </div>
 </body>
 </html>
