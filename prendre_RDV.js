@@ -32,6 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         selectedSlot = td;
         td.classList.add('selected');
+        selectedSlot.dataset.row = rowIndex;
+        selectedSlot.dataset.col = colIndex;
     }
 
     // Fonction pour enregistrer le rendez-vous
