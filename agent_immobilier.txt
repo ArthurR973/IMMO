@@ -1,17 +1,13 @@
--- Création de la table AGENT_IMMO
+-- Supprimer la table si elle existe déjà
+DROP TABLE IF EXISTS AGENT_IMMO;
+
+-- Créer la nouvelle table AGENT_IMMO
 CREATE TABLE AGENT_IMMO (
     numero_identification INT PRIMARY KEY,
     mot_de_passe VARCHAR(255) NOT NULL,
     nom VARCHAR(100) NOT NULL,
     prenom VARCHAR(100) NOT NULL,
     specialite VARCHAR(255),
-    video VARCHAR(255),
-    photo VARCHAR(255),
-    cv VARCHAR(255),
-    tel VARCHAR(20),
-    bureau INT,
-    courriel VARCHAR(100),
-    honoraire DECIMAL(10, 2),
     lundi_matin VARCHAR(10),
     lundi_apres_midi VARCHAR(10),
     mardi_matin VARCHAR(10),
@@ -21,31 +17,42 @@ CREATE TABLE AGENT_IMMO (
     jeudi_matin VARCHAR(10),
     jeudi_apres_midi VARCHAR(10),
     vendredi_matin VARCHAR(10),
-    vendredi_apres_midi VARCHAR(10)
+    vendredi_apres_midi VARCHAR(10),
+    video VARCHAR(255),
+    photo VARCHAR(255),
+    cv VARCHAR(255),
+    tel VARCHAR(20),
+    bureau VARCHAR(255),
+    courriel VARCHAR(100),
+    honoraire DECIMAL(10, 2)
 );
 
--- Insertion des agents avec disponibilités et numéros de bureau aléatoires
+-- Insérer les données des agents avec les nouvelles colonnes de disponibilités et CV formaté
 INSERT INTO AGENT_IMMO (
-    numero_identification, mot_de_passe, nom, prenom, specialite, video, photo, cv, tel, bureau, courriel, honoraire,
-    lundi_matin, lundi_apres_midi, mardi_matin, mardi_apres_midi, mercredi_matin, mercredi_apres_midi, jeudi_matin, jeudi_apres_midi, vendredi_matin, vendredi_apres_midi
+    numero_identification, mot_de_passe, nom, prenom, specialite,
+    lundi_matin, lundi_apres_midi, mardi_matin, mardi_apres_midi, mercredi_matin, mercredi_apres_midi,
+    jeudi_matin, jeudi_apres_midi, vendredi_matin, vendredi_apres_midi,
+    video, photo, cv, tel, bureau, courriel, honoraire
 ) VALUES
-(11, '11', 'DARROZE', 'HELENE', 'Immobilier résidentiel', 'helene_darroze.mp4', 'helene_darroze.jpg', 'CV_Helene_Darroze.html', '01 22 33 44 55', 1, 'helene@omnesimmobilier', 12.00, 'dispo', 'dispo', 'dispo', 'dispo', 'indispo', 'dispo', 'dispo', 'dispo', 'dispo', 'indispo'),
-(12, '12', 'SACKO', 'MORY', 'Immobilier résidentiel', 'mory_sacko.mp4', 'mory_sacko.jpg', 'CV_Mory_Sacko.html', '01 22 33 44 56', 1, 'mory@omnesimmobilier', 12.00, 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'indispo', 'indispo', 'dispo', 'dispo'),
-(13, '13', 'ETSCHEBEST', 'PHILIPE', 'Immobilier résidentiel', 'philipe_etschebest.mp4', 'philipe_etschebest.jpg', 'CV_Philipe_Etschebest.html', '01 22 33 44 57', 1, 'philipe@omnesimmobilier', 12.00, 'dispo', 'dispo', 'dispo', 'indispo', 'dispo', 'indispo', 'dispo', 'dispo', 'dispo', 'dispo'),
-(14, '14', 'MARX', 'THIERRY', 'Immobilier résidentiel', 'thierry_marx.mp4', 'thierry_marx.jpg', 'CV_Thierry_Marx.html', '01 22 33 44 58', 1, 'thierry@omnesimmobilier', 12.00, 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'indispo', 'indispo', 'dispo', 'dispo'),
-(15, '15', 'RAMSAY', 'GORDON', 'Immobilier résidentiel', 'gordon_ramsay.mp4', 'gordon_ramsay.jpg', 'CV_Gordon_Ramsay.html', '01 22 33 44 59', 1, 'gordon@omnesimmobilier', 12.00, 'dispo', 'dispo', 'dispo', 'indispo', 'dispo', 'indispo', 'dispo', 'dispo', 'dispo', 'dispo'),
-(21, '21', 'LAVOINE', 'MARC', 'Immobilier commercial', 'marc_lavoine.mp4', 'marc_lavoine.jpg', 'CV_Marc_Lavoine.html', '01 22 33 45 50', 2, 'marc@omnesimmobilier', 13.00, 'indispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'indispo', 'dispo'),
-(22, '22', 'ELVIS', 'ANGÈLE', 'Immobilier commercial', 'angele_elvis.mp4', 'angele_elvis.jpg', 'CV_Angele_Elvis.html', '01 22 33 45 51', 2, 'angele@omnesimmobilier', 13.00, 'dispo', 'indispo', 'dispo', 'dispo', 'dispo', 'dispo', 'indispo', 'dispo', 'dispo', 'dispo'),
-(23, '23', 'DUCHAUT', 'AURELSAN', 'Immobilier commercial', 'aurelsan_duchaut.mp4', 'aurelsan_duchaut.jpg', 'CV_Aurelsan_Duchaut.html', '01 22 33 45 52', 2, 'aurelsan@omnesimmobilier', 13.00, 'dispo', 'dispo', 'dispo', 'dispo', 'indispo', 'dispo', 'dispo', 'dispo', 'indispo', 'dispo'),
-(24, '24', 'BOUADJIE', 'TAYC', 'Immobilier commercial', 'tayc_bouadjie.mp4', 'tayc_bouadjie.jpg', 'CV_Tayc_Bouadjie.html', '01 22 33 45 53', 2, 'tayc@omnesimmobilier', 13.00, 'dispo', 'dispo', 'dispo', 'dispo', 'indispo', 'dispo', 'dispo', 'dispo', 'dispo', 'indispo'),
-(25, '25', 'GRANDE', 'ARIANA', 'Immobilier commercial', 'ariana_grande.mp4', 'ariana_grande.jpg', 'CV_Ariana_Grande.html', '01 22 33 45 54', 2, 'ariana@omnesimmobilier', 13.00, 'dispo', 'indispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'indispo', 'dispo'),
-(31, '31', 'PLAZZA', 'STEPHAN', 'Appartement à louer', 'stephan_plazza.mp4', 'stephan_plazza.jpg', 'CV_Stephan_Plazza.html', '01 22 33 45 55', 3, 'stephan@omnesimmobilier', 14.00, 'dispo', 'dispo', 'dispo', 'indispo', 'dispo', 'indispo', 'dispo', 'dispo', 'dispo', 'dispo'),
-(32, '32', 'VAUDRU', 'JOSIANE', 'Appartement à louer', 'josiane_vaudru.mp4', 'josiane_vaudru.jpg', 'CV_Josiane_Vaudru.html', '01 22 33 45 56', 3, 'josiane@omnesimmobilier', 14.00, 'dispo', 'dispo', 'dispo', 'dispo', 'indispo', 'dispo', 'dispo', 'dispo', 'indispo', 'dispo'),
-(33, '33', 'BROLA', 'ANTOINE', 'Appartement à louer', 'antoine_brola.mp4', 'antoine_brola.jpg', 'CV_Antoine_Brola.html', '01 22 33 45 57', 3, 'antoine@omnesimmobilier', 14.00, 'dispo', 'dispo', 'dispo', 'dispo', 'indispo', 'dispo', 'dispo', 'dispo', 'indispo', 'dispo'),
-(34, '34', 'DUBULE', 'VINCENT', 'Appartement à louer', 'vincent_dubule.mp4', 'vincent_dubule.jpg', 'CV_Vincent_Dubule.html', '01 22 33 45 58', 3, 'vincent@omnesimmobilier', 14.00, 'dispo', 'indispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'indispo', 'dispo'),
-(35, '35', 'LERMITE', 'THIERRY', 'Appartement à louer', 'thierry_lermite.mp4', 'thierry_lermite.jpg', 'CV_Thierry_Lermite.html', '01 22 33 45 59', 3, 'thierry@omnesimmobilier', 14.00, 'dispo', 'dispo', 'dispo', 'dispo', 'indispo', 'dispo', 'dispo', 'dispo', 'indispo', 'dispo'),
-(41, '41', 'ADAMS', 'KEV', 'Le terrain', 'kev_adams.mp4', 'kev_adams.jpg', 'CV_Kev_Adams.html', '01 22 33 46 60', 4, 'kev@omnesimmobilier', 15.00, 'indispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'indispo', 'dispo'),
-(42, '42', 'HURIA', 'JAMEL', 'Le terrain', 'jamel_huria.mp4', 'jamel_huria.jpg', 'CV_Jamel_Huria.html', '01 22 33 46 61', 4, 'jamel@omnesimmobilier', 15.00, 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'indispo', 'dispo'),
-(43, '43', 'NAYMAR', 'JEROME', 'Le terrain', 'jerome_naymar.mp4', 'jerome_naymar.jpg', 'CV_Jerome_Naymar.html', '01 22 33 46 62', 4, 'jerome@omnesimmobilier', 15.00, 'indispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'indispo', 'dispo'),
-(44, '44', 'FOFANA', 'MOHAMED', 'Le terrain', 'mohamed_fofana.mp4', 'mohamed_fofana.jpg', 'CV_Mohamed_Fofana.html', '01 22 33 46 63', 4, 'mohamed@omnesimmobilier', 15.00, 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'indispo', 'dispo'),
-(45, '45', 'BRUEL', 'PATRICK', 'Le terrain', 'patrick_bruel.mp4', 'patrick_bruel.jpg', 'CV_Patrick_Bruel.html', '01 22 33 46 64', 4, 'patrick@omnesimmobilier', 15.00, 'indispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'indispo', 'dispo');
+(11, '11', 'DARROZE', 'HELENE', 'Immobilier résidentiel', 'dispo', 'indispo', 'dispo', 'indispo', 'dispo', 'indispo', 'dispo', 'indispo', 'dispo', 'indispo', 'helene_darroze.mp4', 'helene_darroze.jpg', 'CV_HELENE_DARROZE.pdf', '0101010111', 'Bureau 1', 'helene@omnesimmobilier', 12.00),
+(12, '12', 'SACKO', 'MORY', 'Immobilier résidentiel', 'indispo', 'dispo', 'dispo', 'dispo', 'indispo', 'indispo', 'dispo', 'dispo', 'dispo', 'dispo', 'mory_sacko.mp4', 'mory_sacko.jpg', 'CV_MORY_SACKO.pdf', '0101010112', 'Bureau 1', 'mory@omnesimmobilier', 12.00),
+(13, '13', 'ETSCHEBEST', 'PHILIPE', 'Immobilier résidentiel', 'dispo', 'dispo', 'dispo', 'dispo', 'indispo', 'indispo', 'indispo', 'dispo', 'dispo', 'indispo', 'philipe_etschebest.mp4', 'philipe_etschebest.jpg', 'CV_PHILIPE_ETSCHEBEST.pdf', '0101010113', 'Bureau 1', 'philipe@omnesimmobilier', 12.00),
+(14, '14', 'MARX', 'THIERRY', 'Immobilier résidentiel', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'thierry_marx.mp4', 'thierry_marx.jpg', 'CV_THIERRY_MARX.pdf', '0101010114', 'Bureau 1', 'thierry@omnesimmobilier', 12.00),
+(15, '15', 'RAMSAY', 'GORDON', 'Immobilier résidentiel', 'indispo', 'indispo', 'dispo', 'indispo', 'dispo', 'indispo', 'dispo', 'indispo', 'indispo', 'dispo', 'gordon_ramsay.mp4', 'gordon_ramsay.jpg', 'CV_GORDON_RAMSEY.pdf', '0101010115', 'Bureau 1', 'gordon@omnesimmobilier', 12.00),
+
+-- Immobilier commercial
+(21, '21', 'LAVOINE', 'MARC', 'Immobilier commercial', 'dispo', 'dispo', 'dispo', 'dispo', 'indispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'marc_lavoine.mp4', 'marc_lavoine.jpg', 'CV_MARC_LAVOINE.pdf', '0102020121', 'Bureau 2', 'marc@omnesimmobilier', 13.00),
+(22, '22', 'ELVIS', 'ANGÈLE', 'Immobilier commercial', 'indispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'angele_elvis.mp4', 'angele_elvis.jpg', 'CV_ANGÈLE_ELVIS.pdf', '0102020122', 'Bureau 2', 'angele@omnesimmobilier', 13.00),
+(23, '23', 'DUCHAUT', 'AURELSAN', 'Immobilier commercial', 'dispo', 'indispo', 'indispo', 'dispo', 'indispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'aurelsan_duchaut.mp4', 'aurelsan_duchaut.jpg', 'CV_AURELSAN_DUCHAUT.pdf', '0102020123', 'Bureau 2', 'aurelsan@omnesimmobilier', 13.00),
+(24, '24', 'BOUADJIE', 'TAYC', 'Immobilier commercial', 'dispo', 'indispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'tayc_bouadjie.mp4', 'tayc_bouadjie.jpg', 'CV_TAYC_BOUDAJIE.pdf', '0102020124', 'Bureau 2', 'tayc@omnesimmobilier', 13.00),
+(25, '25', 'GRANDE', 'ARIANA', 'Immobilier commercial', 'dispo', 'indispo', 'dispo', 'indispo', 'dispo', 'indispo', 'dispo', 'indispo', 'indispo', 'dispo', 'ariana_grande.mp4', 'ariana_grande.jpg', 'CV_ARIANA_GRANDE.pdf', '0102020125', 'Bureau 2', 'ariana@omnesimmobilier', 13.00),
+(31, '31', 'PLAZZA', 'STEPHAN', 'Appartement à louer', 'dispo', 'indispo', 'dispo', 'indispo', 'dispo', 'indispo', 'dispo', 'indispo', 'dispo', 'indispo', 'stephan_plazza.mp4', 'stephan_plazza.jpg', 'CV_STEPHAN_PLAZZA.pdf', '0103030131', 'Bureau 3', 'stephan@omnesimmobilier', 14.00),
+(32, '32', 'VAUDRU', 'JOSIANE', 'Appartement à louer', 'dispo', 'dispo', 'dispo', 'indispo', 'dispo', 'dispo', 'dispo', 'indispo', 'dispo', 'dispo', 'josiane_vaudru.mp4', 'josiane_vaudru.jpg', 'CV_JOSIANE_VAUDRU.pdf', '0103030132', 'Bureau 3', 'josiane@omnesimmobilier', 14.00),
+(33, '33', 'BROLA', 'ANTOINE', 'Appartement à louer', 'dispo', 'dispo', 'dispo', 'indispo', 'dispo', 'dispo', 'dispo', 'indispo', 'dispo', 'dispo', 'antoine_brola.mp4', 'antoine_brola.jpg', 'CV_ANTOINE_BROLA.pdf', '0103030133', 'Bureau 3', 'antoine@omnesimmobilier', 14.00),
+(34, '34', 'DUBULE', 'VINCENT', 'Appartement à louer', 'indispo', 'dispo', 'dispo', 'indispo', 'indispo', 'dispo', 'dispo', 'dispo', 'dispo', 'indispo', 'vincent_dubule.mp4', 'vincent_dubule.jpg', 'CV_VINCENT_DUBULE.pdf', '0103030134', 'Bureau 3', 'vincent@omnesimmobilier', 14.00),
+(35, '35', 'LERMITE', 'THIERRY', 'Appartement à louer', 'dispo', 'indispo', 'dispo', 'dispo', 'dispo', 'indispo', 'dispo', 'dispo', 'dispo', 'indispo', 'thierry_lermite.mp4', 'thierry_lermite.jpg', 'CV_THIERRY_LERMITE.pdf', '0103030135', 'Bureau 3', 'thierry@omnesimmobilier', 14.00),
+(41, '41', 'ADAMS', 'KEV', 'Le terrain', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'kev_adams.mp4', 'kev_adams.jpg', 'CV_KEV_ADAMS.pdf', '0104040141', 'Bureau 4', 'kev@omnesimmobilier', 15.00),
+(42, '42', 'NGIJOL', 'THOMAS', 'Le terrain', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'thomas_ngijol.mp4', 'thomas_ngijol.jpg', 'CV_THOMAS_NGIJOL.pdf', '0104040142', 'Bureau 4', 'thomas@omnesimmobilier', 15.00),
+(43, '43', 'JUDOR', 'ERIC', 'Le terrain', 'indispo', 'dispo', 'indispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'eric_judor.mp4', 'eric_judor.jpg', 'CV_ERIC_JUDOR.pdf', '0104040143', 'Bureau 4', 'eric@omnesimmobilier', 15.00),
+(44, '44', 'SYLLA', 'AHMED', 'Le terrain', 'dispo', 'indispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'ahmed_sylla.mp4', 'ahmed_sylla.jpg', 'CV_AHMED_SYLLA.pdf', '0104040144', 'Bureau 4', 'ahmed@omnesimmobilier', 15.00),
+(45, '45', 'FORESTI', 'FLORENCE', 'Le terrain', 'dispo', 'dispo', 'dispo', 'indispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'dispo', 'florence_foresti.mp4', 'florence_foresti.jpg', 'CV_FLORENCE_FORESTI.pdf', '0104040145', 'Bureau 4', 'florence@omnesimmobilier', 15.00);
