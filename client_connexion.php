@@ -1,46 +1,3 @@
-<?php
-session_start();
-
-// Vérifie si les variables de session sont définies
-if (isset($_SESSION['name']) && isset($_SESSION['surname'])) {
-    // Récupère les valeurs des variables de session
-    $Nom = $_SESSION['name'];
-    $Prénom = $_SESSION['surname'];
-} else {
-    // Redirige vers identification.php si les variables de session ne sont pas définies
-    header("Location: identification.php");
-    exit();
-}
-
-// Vérifie si le formulaire a été soumis
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Inclure la connexion à la base de données
-    $servername = "localhost";
-    $username = "root"; // Remplacez par votre nom d'utilisateur
-    $password = ""; // Remplacez par votre mot de passe
-    $dbname = "projet_piscine";
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    // Vérifier si l'utilisateur est redirigé depuis identification.php
-    if (isset($_SESSION['name']) && isset($_SESSION['surname'])) {
-        $Nom = $_SESSION['name'];
-        $Prénom = $_SESSION['surname'];
-    } else {
-        echo "<p class='error-message'>Erreur : Veuillez vous identifier d'abord.</p>";
-        exit();
-    }
-
-    $Mot_de_passe = $_POST['password'];
-    $Mot_de_passe = $conn->real_escape_string($Mot_de_passe);
-    $sql = "SELECT * FROM clients WHERE Nom = '$Nom' AND Prénom = '$Prénom' AND Mot_de_passe = '$Mot_de_passe'";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        header("Location: espace_client.php");
-        exit();
-    } else {
-    }
-}
-?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -78,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <div class="container">
         <a href="accueil.php">
-            <img src="logotest.png" alt="Logo Omnes Immobilier" class="logo">
+            <img src="logotest3.png" alt="Logo Omnes Immobilier" class="logo">
         </a>
         <h2 class="form-title">Connexion Client</h2>
         <form method="post" action="client_connexion.php">
@@ -93,6 +50,53 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
     ?>
+   <?php
+session_start();
+
+// Vérifie si les variables de session sont définies
+if (isset($_SESSION['name']) && isset($_SESSION['surname'])) {
+    // Récupère les valeurs des variables de session
+    $Nom = $_SESSION['name'];
+    $Prénom = $_SESSION['surname'];
+} else {
+    // Redirige vers identification.php si les variables de session ne sont pas définies
+    header("Location: identification.php");
+    exit();
+}
+
+// Vérifie si le formulaire a été soumis
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Inclure la connexion à la base de données
+    $servername = "localhost";
+    $username = "root"; // Remplacez par votre nom d'utilisateur
+    $password = ""; // Remplacez par votre mot de passe
+    $dbname = "projet_piscine";
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    // Vérifier si l'utilisateur est redirigé depuis identification.php
+    if (isset($_SESSION['name']) && isset($_SESSION['surname'])) {
+        $Nom = $_SESSION['name'];
+        $Prénom = $_SESSION['surname'];
+    } else {
+        echo "<p class='error-message'>Erreur : Veuillez vous identifier d'abord.</p>";
+        exit();
+    }
+
+    $Mot_de_passe = $_POST['password'];
+    $Mot_de_passe = $conn->real_escape_string($Mot_de_passe);
+    $sql = "SELECT * FROM clients WHERE Nom = '$Nom' AND Prénom = '$Prénom' AND Mot_de_passe = '$Mot_de_passe'";
+    $result = $conn->query($sql);
+
+    // Vérifie si la requête a retourné des résultats
+    if ($result->num_rows > 0) {
+        header("Location: espace_client.php");
+        exit();
+    } else {
+        // Affiche le message d'erreur si le mot de passe est incorrect
+        echo "<p class='error-message'>Mot de passe incorrect.</p>";
+    }
+}
+?>
             </div>
             <button type="submit" class="btn btn-primary">Se connecter</button>
         </form>
