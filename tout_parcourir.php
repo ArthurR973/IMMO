@@ -66,9 +66,9 @@
     </div>
    
     <div class="navigation">
-        <a href="accueil.html">Accueil</a>
-        <a href="#tout-parcourir">Tout Parcourir</a>
-        <a href="#recherche">Recherche</a>
+        <a href="accueil.php">Accueil</a>
+        <a href="#tout_parcourir">Tout Parcourir</a>
+        <a href="recherche.php">Recherche</a>
         <a href="#rendez-vous">Rendez-vous</a>
         <a href="#votre-compte">Votre Compte</a>
     </div>
