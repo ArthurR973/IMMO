@@ -141,11 +141,11 @@
             </div>
             <div class="form-group">
                 <label for="card_type">Type de carte de paiement</label>
-                <input type="text" class="form-control" id="card_type" name="Type_de_carte_de_paiement" placeholder=" " required>
+                <input type="text" class="form-control" id="card_type" name="Type_de_carte_de_paiement" placeholder="Visa/Mastercard" required>
             </div>
             <div class="form-group">
                 <label for="card_number">Numéro de la carte</label>
-                <input type="text" class="form-control" id="card_number" name="Numéro_de_la_carte" placeholder=" " required>
+                <input type="text" class="form-control" id="card_number" name="Numéro_de_la_carte" placeholder="10 chiffres " required>
             </div>
             <div class="form-group">
                 <label for="card_name">Nom sur la carte</label>
@@ -153,11 +153,11 @@
             </div>
             <div class="form-group">
                 <label for="card_expiry">Date d'expiration de la carte</label>
-                <input type="text" class="form-control" id="card_expiry" name="Date_d_expiration_de_la_carte" placeholder="MM/AA" required>
+                <input type="text" class="form-control" id="card_expiry" name="Date_d_expiration_de_la_carte" placeholder="AAAA-MM-JJ" required>
             </div>
             <div class="form-group">
                 <label for="card_security">Code de sécurité</label>
-                <input type="text" class="form-control" id="card_security" name="Code_de_sécurité" placeholder=" " required>
+                <input type="text" class="form-control" id="card_security" name="Code_de_sécurité" placeholder="CVV" required>
             </div>
             <p class="terms">En créant un compte, tu acceptes les conditions d'utilisation et tu confirmes avoir lu la politique de confidentialité de OMNES IMMOBILIER.</p>
             <button type="submit" class="btn btn-primary">Créer un compte</button>

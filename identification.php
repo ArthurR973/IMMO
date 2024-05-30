@@ -1,18 +1,54 @@
 <?php
 session_start();
 
+// Inclure la connexion à la base de données
+$servername = "localhost";
+$username = "root"; // Remplacez par votre nom d'utilisateur
+$password = ""; // Remplacez par votre mot de passe
+$dbname = "projet_piscine";
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+$error_message = "";
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Récupérez les données du formulaire
     $Nom = $_POST['name'];
     $Prénom = $_POST['surname'];
 
-    // Stockez ces valeurs dans la session
-    $_SESSION['name'] = $Nom;
-    $_SESSION['surname'] = $Prénom;
+    // Sécurisez les données
+    $Nom = $conn->real_escape_string($Nom);
+    $Prénom = $conn->real_escape_string($Prénom);
 
-    // Redirigez vers client_connexion.php
-    header("Location: client_connexion.php");
-    exit();
+    // Recherchez l'utilisateur dans la base de données
+    $sql = "SELECT * FROM clients WHERE Nom = '$Nom' AND Prénom = '$Prénom'";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        $_SESSION['name'] = $Nom;
+        $_SESSION['surname'] = $Prénom;
+        header("Location: client_connexion.php");
+        exit();
+    } else {
+        $sql_admin = "SELECT * FROM administrateur WHERE nom = '$Nom' AND prenom = '$Prénom'";
+        $result_admin = $conn->query($sql_admin);
+        if ($result_admin->num_rows > 0) {
+            $_SESSION['name'] = $Nom;
+            $_SESSION['surname'] = $Prénom;
+            header("Location: admin_connexion.html");
+            exit();
+        } else {
+            $sql_agent = "SELECT * FROM agent_immo WHERE nom = '$Nom' AND prenom = '$Prénom'";
+            $result_agent = $conn->query($sql_agent);
+            if ($result_agent->num_rows > 0) {
+                $_SESSION['name'] = $Nom;
+                $_SESSION['surname'] = $Prénom;
+                header("Location: agent_connexion.html");
+                exit();
+            } else {
+                $error_message = "Nom et prénom inconnus";
+            }
+        }
+    }
 }
 ?>
 
@@ -116,50 +152,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="form-group">
                 <input type="text" class="form-control" id="name" name="name" placeholder="Nom" required>
             </div>
-        <?php
-            // Inclure la connexion à la base de données
-            $servername = "localhost";
-            $username = "root"; // Remplacez par votre nom d'utilisateur
-            $password = ""; // Remplacez par votre mot de passe
-            $dbname = "projet_piscine";
-            $conn = new mysqli($servername, $username, $password, $dbname);
-
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                $Nom = $_POST['name'];
-                $Prénom = $_POST['surname'];
-                $Nom = $conn->real_escape_string($Nom);
-                $Prénom = $conn->real_escape_string($Prénom);
-                $sql = "SELECT * FROM clients WHERE Nom = '$Nom' AND Prénom = '$Prénom'";
-                $result = $conn->query($sql);
-                if ($result->num_rows > 0) {
-                    header("Location: client_connexion.php");
-                    exit();
-                } else {
-                    $sql_admin = "SELECT * FROM administrateur WHERE nom = '$Nom' AND prenom = '$Prénom'";
-                    $result_admin = $conn->query($sql_admin);
-                    if ($result_admin->num_rows > 0) {
-                        header("Location: admin_connexion.html");
-                        exit();
-                    } else {
-                        $sql_agent = "SELECT * FROM agent_immo WHERE nom = '$Nom' AND prenom = '$Prénom'";
-                        $result_agent = $conn->query($sql_agent);
-                        if ($result_agent->num_rows > 0) {
-                            header("Location: agent_connexion.html");
-                            exit();
-                        } else {
-                            echo "<p class='error' id='error-message'>Nom et prénom inconnus</p>";
-                        }
-                    }
+            <?php
+                if (!empty($error_message)) {
+                    echo "<p class='error'>$error_message</p>";
                 }
-            }
-        ?>
-        <p class="terms">En continuant, tu acceptes les conditions d'utilisation et tu confirmes avoir lu la politique de confidentialité de OMNES IMMOBILIER.</p>
+            ?>
+            <p class="terms">En continuant, tu acceptes les conditions d'utilisation et tu confirmes avoir lu la politique de confidentialité de OMNES IMMOBILIER.</p>
             <button type="submit" class="btn btn-primary">Continuer</button>
         </form> 
     </div>
     <div class="new-account"><br>
-            <center><p class="terms">Nouveau chez OMNES IMMOBILIER ?</p></center>
-            <center><a href="creationcompte.php" class="btn btn btn-primary">Créez votre compte OMNES</a></center>
-        </div>
+        <center><p class="terms">Nouveau chez OMNES IMMOBILIER ?</p></center>
+        <center><a href="creationcompte.php" class="btn btn btn-primary">Créez votre compte OMNES</a></center>
+    </div>
 </body>
 </html>
