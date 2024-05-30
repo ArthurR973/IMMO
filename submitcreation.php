@@ -14,15 +14,15 @@ if ($conn->connect_error) {
 }
 
 // Récupérer les données du formulaire
-$surname = $_POST['surname'];
-$name = $_POST['name'];
-$email = $_POST['email'];
-$address1 = $_POST['address1'];
-$city = $_POST['city'];
-$postal_code = $_POST['postal_code'];
-$country = $_POST['country'];
-$phone = $_POST['phone'];
-$password = $_POST['password'];
+$surname = $_POST['Nom'];
+$name = $_POST['Prénom'];
+$email = $_POST['courriel'];
+$address1 = $_POST['Adresse_Ligne_1'];
+$city = $_POST['Ville'];
+$postal_code = $_POST['Code_Postal'];
+$country = $_POST['Pays'];
+$phone = $_POST['Numéro_de_téléphone'];
+$password = $_POST['Mot_de_passe'];
 $confirm_password = $_POST['confirm_password'];
 
 // Vérifier si les mots de passe correspondent
@@ -43,6 +43,7 @@ $phone = $conn->real_escape_string($phone);
 $password = password_hash($password, PASSWORD_BCRYPT); // Hachage du mot de passe
 
 // Insérer les données dans la table `clients`
+// Les colonnes de carte de paiement sont mises à NULL par défaut
 $sql = "INSERT INTO clients (Nom, Prénom, courriel, Mot_de_passe, Adresse_Ligne_1, Ville, Code_Postal, Pays, Numéro_de_téléphone, Type_de_carte_de_paiement, Numéro_de_la_carte, Nom_sur_la_carte, Date_d_expiration_de_la_carte, Code_de_sécurité) 
         VALUES ('$name', '$surname', '$email', '$password', '$address1', '$city', '$postal_code', '$country', '$phone', NULL, NULL, NULL, NULL, NULL)";
 
@@ -53,6 +54,3 @@ if ($conn->query($sql) === TRUE) {
 } else {
     echo "Erreur : " . $sql . "<br>" . $conn->error;
 }
-
-$conn->close();
-?>
