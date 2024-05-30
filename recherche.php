@@ -84,10 +84,10 @@ $agents = $statement_agents->fetchAll(PDO::FETCH_ASSOC);
 
     <div class="navigation">
         <a href="accueil.php">Accueil</a>
-        <a href="parcourir.php">Tout Parcourir</a>
+        <a href="tout_parcourir.php">Tout Parcourir</a>
         <a href="recherche.php">Recherche</a>
         <a href="rendezvous.php">Rendez-vous</a>
-        <a href="compte.php">Votre Compte</a>
+        <a href="identification.php">Votre Compte</a>
     </div>
     
     <div class="container">

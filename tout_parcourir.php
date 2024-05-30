@@ -70,7 +70,7 @@
         <a href="#tout_parcourir">Tout Parcourir</a>
         <a href="recherche.php">Recherche</a>
         <a href="#rendez-vous">Rendez-vous</a>
-        <a href="#votre-compte">Votre Compte</a>
+        <a href="identification.php">Votre Compte</a>
     </div>
    
     <div id="tout-parcourir" class="container">
