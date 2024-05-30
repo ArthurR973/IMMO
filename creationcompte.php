@@ -116,10 +116,6 @@
                 <input type="text" class="form-control" id="address1" name="address1" placeholder=" " required>
             </div>
             <div class="form-group">
-                <label for="address2">Adresse Ligne 2</label>
-                <input type="text" class="form-control" id="address2" name="address2" placeholder="(Optionnel)">
-            </div>
-            <div class="form-group">
                 <label for="country">Pays</label>
                 <input type="text" class="form-control" id="country" name="country" placeholder="Pays" required>
             </div>

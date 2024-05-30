@@ -1,3 +1,21 @@
+CREATE TABLE clients (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    Nom VARCHAR(50) NOT NULL,
+    Prénom VARCHAR(50) NOT NULL,
+    courriel VARCHAR(100) NOT NULL UNIQUE,
+    Mot_de_passe VARCHAR(255) NOT NULL,
+    Adresse_Ligne_1 VARCHAR(255) NOT NULL,
+    Ville VARCHAR(100) NOT NULL,
+    Code_Postal VARCHAR(20) NOT NULL,
+    Pays VARCHAR(100) NOT NULL,
+    Numéro_de_téléphone VARCHAR(20) NOT NULL,
+    Type_de_carte_de_paiement VARCHAR(50),
+    Numéro_de_la_carte VARCHAR(20),
+    Nom_sur_la_carte VARCHAR(100),
+    Date_d_expiration_de_la_carte DATE,
+    Code_de_sécurité VARCHAR(4)
+);
+
 INSERT INTO clients (Prénom, Nom, courriel, Mot_de_passe, Adresse_Ligne_1, Ville, Code_Postal, Pays, Numéro_de_téléphone, Type_de_carte_de_paiement, Numéro_de_la_carte, Nom_sur_la_carte, Date_d_expiration_de_la_carte, Code_de_sécurité) 
 VALUES 
 ('Lionel', 'Messi', 'lionel.messi@client.com', '123', '10 Rue de Rivoli', 'Paris', '75001', 'France', '0612345678', 'Visa', '1234567890123456', 'Lionel Messi', '2025-05-31', '123'),
