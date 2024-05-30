@@ -1,4 +1,4 @@
-INSERT INTO clients (Nom, Prénom, courriel, Mot_de_passe, Adresse_Ligne_1, Ville, Code_Postal, Pays, Numéro_de_téléphone, Type_de_carte_de_paiement, Numéro_de_la_carte, Nom_sur_la_carte, Date_d_expiration_de_la_carte, Code_de_sécurité) 
+INSERT INTO clients (Prénom, Nom, courriel, Mot_de_passe, Adresse_Ligne_1, Ville, Code_Postal, Pays, Numéro_de_téléphone, Type_de_carte_de_paiement, Numéro_de_la_carte, Nom_sur_la_carte, Date_d_expiration_de_la_carte, Code_de_sécurité) 
 VALUES 
 ('Lionel', 'Messi', 'lionel.messi@client.com', '123', '10 Rue de Rivoli', 'Paris', '75001', 'France', '0612345678', 'Visa', '1234567890123456', 'Lionel Messi', '2025-05-31', '123'),
 ('Cristiano', 'Ronaldo', 'cristiano.ronaldo@client.com', '234', '20 Avenue des Champs-Élysées', 'Paris', '75008', 'France', '0612345679', 'MasterCard', '2345678901234567', 'Cristiano Ronaldo', '2025-06-30', '234'),
