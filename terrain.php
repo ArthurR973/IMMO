@@ -13,7 +13,7 @@ if ($conn->connect_error) {
 }
 
 // Requête pour récupérer les biens et leurs agents pour le type "terrain"
-$sql = "SELECT BIEN.numero, BIEN.photo, BIEN.description, BIEN.adresse, AGENT_IMMO.prenom, AGENT_IMMO.nom, AGENT_IMMO.courriel, AGENT_IMMO.tel
+$sql = "SELECT BIEN.numero, BIEN.photo, BIEN.description, BIEN.adresse, AGENT_IMMO.prenom, AGENT_IMMO.nom, AGENT_IMMO.courriel, AGENT_IMMO.tel, AGENT_IMMO.numero_identification
         FROM BIEN
         JOIN AGENT_IMMO ON BIEN.id_agent = AGENT_IMMO.numero_identification
         WHERE BIEN.type = 'Le terrain'";
@@ -41,7 +41,7 @@ if ($result === FALSE) {
                 <li><a href="tout_parcourir.php">Tout Parcourir</a></li>
                 <li><a href="recherche.php">Recherche</a></li>
                 <li><a href="rendez_vous.html">Rendez-vous</a></li>
-                <li><a href="votre_compte.html">Votre Compte</a></li>
+                <li><a href="identification.php">Votre Compte</a></li>
             </ul>
         </nav>
     </header>
@@ -59,7 +59,7 @@ if ($result === FALSE) {
                     echo "<p>Agent : " . $row["prenom"] . " " . $row["nom"] . "</p>";
                     echo "<p>Email : <a href='mailto:" . $row["courriel"] . "'>" . $row["courriel"] . "</a></p>";
                     echo "<p>Téléphone : " . $row["tel"] . "</p>";
-                    echo "<a href='agent.html'>Contactez l'agent</a>";
+                    echo "<a href='contacter_agent.php?agent_id=" . $row["numero_identification"] . "'>Contactez l'agent</a>";
                     echo "</div>";
                 }
             } else {
