@@ -42,9 +42,8 @@ $country = $conn->real_escape_string($country);
 $phone = $conn->real_escape_string($phone);
 $password = password_hash($password, PASSWORD_BCRYPT); // Hachage du mot de passe
 
-// Insérer les données dans la table `users`
-// Les colonnes de carte de paiement sont mises à NULL par défaut
-$sql = "INSERT INTO users (Nom, Prénom, courriel, Mot_de_passe, Adresse_Ligne_1, Ville, Code_Postal, Pays, Numéro_de_téléphone, Type_de_carte_de_paiement, Numéro_de_la_carte, Nom_sur_la_carte, Date_d_expiration_de_la_carte, Code_de_sécurité) 
+// Insérer les données dans la table `clients`
+$sql = "INSERT INTO clients (Nom, Prénom, courriel, Mot_de_passe, Adresse_Ligne_1, Ville, Code_Postal, Pays, Numéro_de_téléphone, Type_de_carte_de_paiement, Numéro_de_la_carte, Nom_sur_la_carte, Date_d_expiration_de_la_carte, Code_de_sécurité) 
         VALUES ('$name', '$surname', '$email', '$password', '$address1', '$city', '$postal_code', '$country', '$phone', NULL, NULL, NULL, NULL, NULL)";
 
 if ($conn->query($sql) === TRUE) {
