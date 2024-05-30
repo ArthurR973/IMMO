@@ -40,8 +40,8 @@ if ($result === FALSE) {
                 <li><a href="accueil.php">Accueil</a></li>
                 <li><a href="tout_parcourir.php">Tout Parcourir</a></li>
                 <li><a href="recherche.php">Recherche</a></li>
-                <li><a href="rendez_vous.html">Rendez-vous</a></li>
-                <li><a href="votre_compte.html">Votre Compte</a></li>
+                <li><a href="rendez_vous.php">Rendez-vous</a></li>
+                <li><a href="identification.php">Votre Compte</a></li>
             </ul>
         </nav>
     </header>
@@ -59,7 +59,7 @@ if ($result === FALSE) {
                     echo "<p>Agent : " . $row["prenom"] . " " . $row["nom"] . "</p>";
                     echo "<p>Email : <a href='mailto:" . $row["courriel"] . "'>" . $row["courriel"] . "</a></p>";
                     echo "<p>Téléphone : " . $row["tel"] . "</p>";
-                    echo "<a href='agent_" . strtolower($row["prenom"]) . "_" . strtolower($row["nom"]) . ".php'>Contactez l'agent</a>";
+                    echo "<a href='contacter_agent.php?agent_id=" . $row["numero_identification"] . "'>Contactez l'agent</a>";
                     echo "</div>";
                 }
             } else {
