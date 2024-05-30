@@ -7,12 +7,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            background-color: #f8f9fa;
+            font-family: 'Lora', serif;
+            color: #333;
         }
         .container {
             text-align: center;
@@ -22,9 +18,56 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        .logo {
-            width: 150px;
+        .header {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .header h1 {
+            font-family: 'Montserrat', sans-serif;
+            color: white;
+            font-size: 2.5rem;
+            margin: 0;
+        }
+        .navigation {
+            background-color: #f8f9fa;
+            padding: 10px;
+            text-align: center;
+        }
+        .navigation a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+        .welcome {
+            background-color: #f8f9fa;
+            color: #333;
+            padding: 50px;
+            text-align: center;
+        }
+        .welcome h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
             margin-bottom: 20px;
+        }
+        .welcome p {
+            font-size: 1rem;
+        }
+        .event-section {
+            padding: 50px 20px;
+            text-align: center;
+        }
+        .carousel-item img {
+            width: 100%;
+            height: auto;
+        }
+        .footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
         }
         .error {
             color: red;
@@ -33,6 +76,8 @@
             font-size: 12px;
             margin-top: 10px;
         }
+        .error {
+            color: red;
     </style>
 </head>
 <body>
