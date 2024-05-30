@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -65,6 +68,9 @@
     </style>
 </head>
 <body>
+if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
+        echo '<a href="logout.php" class="logout-btn">Déconnexion</a>';
+    }
 
 <div class="wrapper">
     <div class="header">
