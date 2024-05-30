@@ -98,7 +98,7 @@
     <a href="accueil.php">
         <img src="logotest.png" alt="Logo Omnes Immobilier" class="logo"></a>
         <h2 class="form-title">Créer un compte</h2>
-        <form action="submit_creation.php" method="post">
+        <form action="submitcreation.php" method="post">
             <div class="form-group">
                 <label for="surname">Prénom</label>
                 <input type="text" class="form-control" id="surname" name="surname" placeholder="Prénom" required>
@@ -114,10 +114,6 @@
             <div class="form-group">
                 <label for="address1">Adresse Ligne 1</label>
                 <input type="text" class="form-control" id="address1" name="address1" placeholder=" " required>
-            </div>
-            <div class="form-group">
-                <label for="address2">Adresse Ligne 2</label>
-                <input type="text" class="form-control" id="address2" name="address2" placeholder="(Optionnel)">
             </div>
             <div class="form-group">
                 <label for="country">Pays</label>
