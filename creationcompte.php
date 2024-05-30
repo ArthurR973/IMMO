@@ -98,7 +98,7 @@
     <a href="accueil.php">
         <img src="logotest.png" alt="Logo Omnes Immobilier" class="logo"></a>
         <h2 class="form-title">Créer un compte</h2>
-        <form action="submit_creation.php" method="post">
+        <form action="submitcreation.php" method="post">
             <div class="form-group">
                 <label for="surname">Prénom</label>
                 <input type="text" class="form-control" id="surname" name="surname" placeholder="Prénom" required>
