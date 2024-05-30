@@ -1,46 +1,40 @@
 <?php
 session_start();
 
-// Vérifie si les variables de session sont définies
-if (isset($_SESSION['name']) && isset($_SESSION['surname'])) {
-    // Récupère les valeurs des variables de session
-    $Nom = $_SESSION['name'];
-    $Prénom = $_SESSION['surname'];
-} else {
-    // Redirige vers identification.php si les variables de session ne sont pas définies
-    header("Location: identification.php");
-    exit();
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "projet_piscine"; // Remplacez par le nom correct de votre base de données
+
+try {
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("Connection failed: " . $e->getMessage());
 }
 
-// Vérifie si le formulaire a été soumis
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Inclure la connexion à la base de données
-    $servername = "localhost";
-    $username = "root"; // Remplacez par votre nom d'utilisateur
-    $password = ""; // Remplacez par votre mot de passe
-    $dbname = "projet_piscine";
-    $conn = new mysqli($servername, $username, $password, $dbname);
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $courriel = $_POST['courriel'];
+    $mot_de_passe = $_POST['mot_de_passe'];
 
-    // Vérifier si l'utilisateur est redirigé depuis identification.php
-    if (isset($_SESSION['name']) && isset($_SESSION['surname'])) {
-        $Nom = $_SESSION['name'];
-        $Prénom = $_SESSION['surname'];
-    } else {
-        echo "<p class='error-message'>Erreur : Veuillez vous identifier d'abord.</p>";
-        exit();
-    }
+    $stmt = $conn->prepare("SELECT * FROM clients WHERE courriel = :courriel AND Mot_de_passe = :mot_de_passe");
+    $stmt->execute(['courriel' => $courriel, 'mot_de_passe' => $mot_de_passe]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    $Mot_de_passe = $_POST['password'];
-    $Mot_de_passe = $conn->real_escape_string($Mot_de_passe);
-    $sql = "SELECT * FROM clients WHERE Nom = '$Nom' AND Prénom = '$Prénom' AND Mot_de_passe = '$Mot_de_passe'";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
+    if ($user) {
+        $_SESSION['user_id'] = $user['ID'];
+        $_SESSION['user_name'] = $user['Prénom'] . ' ' . $user['Nom'];
         header("Location: espace_client.php");
         exit();
     } else {
+        echo "Identifiants incorrects. Veuillez réessayer.";
     }
 }
 ?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
