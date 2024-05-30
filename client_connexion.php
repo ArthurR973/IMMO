@@ -60,7 +60,7 @@ if (isset($_SESSION['name']) && isset($_SESSION['surname'])) {
     $Prénom = $_SESSION['surname'];
 } else {
     // Redirige vers identification.php si les variables de session ne sont pas définies
-    header("Location: identification.php");
+    //header("Location: identification.php");
     exit();
 }
 
