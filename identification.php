@@ -105,8 +105,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
     <div class="container">
-        <a href="taccueil.html">
-        <img src="logotest3.png" alt="Logo Omnes Immobilier" class="logo"></a>
+        <a href="accueil.php">
+        <img src="logotest.png" alt="Logo Omnes Immobilier" class="logo"></a>
 
         <p>Saisis ton nom et ton prénom pour nous rejoindre ou te connecter.</p>
         <form id="name-form" method="post">

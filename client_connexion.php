@@ -78,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <div class="container">
         <a href="accueil.php">
-            <img src="logotest3.png" alt="Logo Omnes Immobilier" class="logo">
+            <img src="logotest.png" alt="Logo Omnes Immobilier" class="logo">
         </a>
         <h2 class="form-title">Connexion Client</h2>
         <form method="post" action="client_connexion.php">
