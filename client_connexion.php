@@ -17,11 +17,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Inclure la connexion à la base de données
     $servername = "localhost";
     $username = "root"; // Remplacez par votre nom d'utilisateur
-    $password = ""; // Remplacez par votre mot de passe
+    $password = ""; 
     $dbname = "projet_piscine";
     $conn = new mysqli($servername, $username, $password, $dbname);
 
-    // Vérifier si l'utilisateur est redirigé depuis identification.php
+  
     if (isset($_SESSION['name']) && isset($_SESSION['surname'])) {
         $Nom = $_SESSION['name'];
         $Prénom = $_SESSION['surname'];
