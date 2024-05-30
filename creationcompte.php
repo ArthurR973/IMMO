@@ -84,6 +84,13 @@
         .form-group {
             text-align: left;
         }
+        .logo {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            display: block;
+            margin: 0 auto 20px;
+        }
     </style>
 </head>
 <body>
