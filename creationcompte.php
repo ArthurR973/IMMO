@@ -84,11 +84,19 @@
         .form-group {
             text-align: left;
         }
+        .logo {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            display: block;
+            margin: 0 auto 20px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <img src="logotest.png" alt="Logo Omnes Immobilier" class="logo">
+    <a href="accueil.php">
+        <img src="logotest.png" alt="Logo Omnes Immobilier" class="logo"></a>
         <h2 class="form-title">Créer un compte</h2>
         <form action="submit_creation.php" method="post">
             <div class="form-group">

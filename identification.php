@@ -76,13 +76,19 @@
             font-size: 12px;
             margin-top: 10px;
         }
-        .error {
-            color: red;
+        .logo {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            display: block;
+            margin: 0 auto 20px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <img src="logotest.png" alt="Logo Omnes Immobilier" class="logo">
+    <a href="accueil.php">
+        <img src="logotest.png" alt="Logo Omnes Immobilier" class="logo"></a>
 
         <p>Saisis ton nom et ton prénom pour nous rejoindre ou te connecter.</p>
         <form id="name-form" method="post">

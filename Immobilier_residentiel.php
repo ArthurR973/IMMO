@@ -13,7 +13,7 @@ if ($conn->connect_error) {
 }
 
 // Requête pour récupérer les biens résidentiels et leurs agents
-$sql = "SELECT BIEN.numero, BIEN.photo, BIEN.description, BIEN.adresse, AGENT_IMMO.prenom, AGENT_IMMO.nom, AGENT_IMMO.courriel, AGENT_IMMO.tel
+$sql = "SELECT BIEN.numero, BIEN.photo, BIEN.description, BIEN.adresse, AGENT_IMMO.numero_identification, AGENT_IMMO.prenom, AGENT_IMMO.nom, AGENT_IMMO.courriel, AGENT_IMMO.tel
         FROM BIEN
         JOIN AGENT_IMMO ON BIEN.id_agent = AGENT_IMMO.numero_identification
         WHERE BIEN.type = 'Immobilier résidentiel'";
@@ -59,7 +59,7 @@ if ($result === FALSE) {
                     echo "<p>Agent : " . $row["prenom"] . " " . $row["nom"] . "</p>";
                     echo "<p>Email : <a href='mailto:" . $row["courriel"] . "'>" . $row["courriel"] . "</a></p>";
                     echo "<p>Téléphone : " . $row["tel"] . "</p>";
-                    echo "<a href='agent.html'>Contactez l'agent</a>";
+                    echo "<a href='agent_" . strtolower($row["prenom"]) . "_" . strtolower($row["nom"]) . ".php'>Contactez l'agent</a>";
                     echo "</div>";
                 }
             } else {
