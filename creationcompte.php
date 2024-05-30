@@ -59,6 +59,14 @@
                 <input type="text" class="form-control" id="address1" name="address1" placeholder=" " required>
             </div>
             <div class="form-group">
+                <label for="country">Ville</label>
+                <input type="text" class="form-control" id="city" name="city" placeholder=" " required>
+            </div>
+            <div class="form-group">
+                <label for="country">Code postal</label>
+                <input type="text" class="form-control" id="postal_code" name="postal_code" placeholder=" " required>
+            </div>
+            <div class="form-group">
                 <label for="country">Pays</label>
                 <input type="text" class="form-control" id="country" name="country" placeholder="Pays" required>
             </div>
