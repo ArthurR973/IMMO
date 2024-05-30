@@ -106,7 +106,7 @@ $scheduleData = getScheduleData($conn);
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                body: `action=save&rowIndex=${rowIndex}&colIndex=${colIndex}&id_agent=14`
+                body: action=save&rowIndex=${rowIndex}&colIndex=${colIndex}&id_agent=14
             })
             .then(response => response.text())
             .then(data => {
@@ -135,7 +135,7 @@ $scheduleData = getScheduleData($conn);
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                body: `action=cancel&rowIndex=${rowIndex}&colIndex=${colIndex}&id_agent=14`
+                body: action=cancel&rowIndex=${rowIndex}&colIndex=${colIndex}&id_agent=14
             })
             .then(response => response.text())
             .then(data => {
