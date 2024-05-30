@@ -153,7 +153,7 @@
             </div>
             <div class="form-group">
                 <label for="card_expiry">Date d'expiration de la carte</label>
-                <input type="text" class="form-control" id="card_expiry" name="Date_d_expiration_de_la_carte" placeholder="YYYY-MM-DD" required>
+                <input type="text" class="form-control" id="card_expiry" name="Date_d_expiration_de_la_carte" placeholder="MM/AA" required>
             </div>
             <div class="form-group">
                 <label for="card_security">Code de sécurité</label>

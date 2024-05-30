@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             VALUES ('$nom', '$prenom', '$courriel', '$motDePasse', '$adresseLigne1', '$ville', '$codePostal', '$pays', '$numTel', '$typeCarte', '$numCarte', '$nomCarte', '$dateExpiration', '$codeSecurite')";
     
     if ($conn->query($sql) === TRUE) {
-        echo "<script>alert('Nouveau compte créé avec succès'); window.location.href = 'accueil.php';</script>";
+        echo "<script>alert('Nouveau compte créé avec succès'); window.location.href = 'taccueil.html';</script>";
     } else {
         echo "<script>alert('Erreur: " . $conn->error . "'); window.history.back();</script>";
     }
