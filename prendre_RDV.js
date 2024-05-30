@@ -54,31 +54,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Fonction pour envoyer la requête au serveur
     function sendRequest(action) {
-        const rowIndex = selectedSlot.parentNode.rowIndex - 1;
-        const colIndex = selectedSlot.cellIndex - 1;
+        const rowIndex = selectedSlot.dataset.row;
+        const colIndex = selectedSlot.dataset.col;
 
-        // Envoyer les données au serveur via AJAX
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', 'manage_appointment.php', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                alert(xhr.responseText);
-                // Mettre à jour l'emploi du temps localement
-                if (action === 'save') {
-                    scheduleData[rowIndex][colIndex] = 'busy';
-                    selectedSlot.classList.remove('selected');
-                    selectedSlot.classList.add('busy');
-                } else if (action === 'cancel') {
-                    scheduleData[rowIndex][colIndex] = 'free';
-                    selectedSlot.classList.remove('selected');
-                    selectedSlot.classList.remove('busy');
-                    selectedSlot.classList.add('free');
-                }
-            } else {
-                alert('Erreur lors de l\'exécution de l\'action.');
+        fetch('manage_appointment.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `action=${action}&rowIndex=${rowIndex}&colIndex=${colIndex}&id_agent=14`
+        })
+        .then(response => response.text())
+        .then(data => {
+            alert(data);
+            // Mettre à jour l'emploi du temps localement
+            if (action === 'save') {
+                selectedSlot.classList.remove('selected');
+                selectedSlot.classList.add('busy');
+            } else if (action === 'cancel') {
+                selectedSlot.classList.remove('selected');
+                selectedSlot.classList.remove('busy');
+                selectedSlot.classList.add('free');
             }
-        };
-        xhr.send(`action=${action}&rowIndex=${rowIndex}&colIndex=${colIndex}`);
+        })
+        .catch(error => {
+            alert('Erreur lors de l\'exécution de l\'action.');
+            console.error(error);
+        });
     }
 });
