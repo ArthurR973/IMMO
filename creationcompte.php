@@ -18,6 +18,26 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+        .form-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .form-group {
+            text-align: left;
+        }
+        .logo {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            display: block;
+            margin: 0 auto 20px;
+        }
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
         .header {
             background-color: #333;
             color: white;
@@ -69,67 +89,75 @@
             text-align: center;
             padding: 20px;
         }
-        .error {
-            color: red;
-        }
-        p.terms {
-            font-size: 12px;
-            margin-top: 10px;
-        }
-        .form-title {
-            font-size: 24px;
-            margin-bottom: 20px;
-            text-align: left;
-        }
-        .form-group {
-            text-align: left;
-        }
-        .logo {
-            width: 100%;
-            max-width: 200px;
-            height: auto;
-            display: block;
-            margin: 0 auto 20px;
-        }
     </style>
 </head>
 <body>
     <div class="container">
-    <a href="accueil.php">
-        <img src="logotest.png" alt="Logo Omnes Immobilier" class="logo"></a>
+        <a href="accueil.php">
+            <img src="logotest.png" alt="Logo Omnes Immobilier" class="logo">
+        </a>
         <h2 class="form-title">Créer un compte</h2>
-        <form action="submitcreation.php" method="post">
+        <form id="registrationForm" action="submitcreation.php" method="post">
             <div class="form-group">
                 <label for="surname">Prénom</label>
-                <input type="text" class="form-control" id="surname" name="surname" placeholder="Prénom" required>
+                <input type="text" class="form-control" id="surname" name="Prénom" placeholder="Prénom" required>
             </div>
             <div class="form-group">
                 <label for="name">Nom</label>
-                <input type="text" class="form-control" id="name" name="name" placeholder="Nom" required>
+                <input type="text" class="form-control" id="name" name="Nom" placeholder="Nom" required>
             </div>
             <div class="form-group">
                 <label for="email">Adresse mail</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder=" " required>
+                <input type="email" class="form-control" id="email" name="courriel" placeholder=" " required>
             </div>
             <div class="form-group">
                 <label for="address1">Adresse Ligne 1</label>
-                <input type="text" class="form-control" id="address1" name="address1" placeholder=" " required>
+                <input type="text" class="form-control" id="address1" name="Adresse_Ligne_1" placeholder=" " required>
+            </div>
+            <div class="form-group">
+                <label for="city">Ville</label>
+                <input type="text" class="form-control" id="city" name="Ville" placeholder=" " required>
+            </div>
+            <div class="form-group">
+                <label for="postal_code">Code postal</label>
+                <input type="text" class="form-control" id="postal_code" name="Code_Postal" placeholder=" " required>
             </div>
             <div class="form-group">
                 <label for="country">Pays</label>
-                <input type="text" class="form-control" id="country" name="country" placeholder="Pays" required>
+                <input type="text" class="form-control" id="country" name="Pays" placeholder="Pays" required>
             </div>
             <div class="form-group">
                 <label for="phone">Numéro de téléphone</label>
-                <input type="text" class="form-control" id="phone" name="phone" placeholder=" " required>
+                <input type="text" class="form-control" id="phone" name="Numéro_de_téléphone" placeholder=" " required>
             </div>
             <div class="form-group">
                 <label for="password">Mot de passe</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="Au moins 3 chiffres" required>
+                <input type="password" class="form-control" id="password" name="Mot_de_passe" placeholder="Au moins 3 caractères" required>
             </div>
             <div class="form-group">
                 <label for="confirm_password">Confirmation du mot de passe</label>
                 <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder=" " required>
+                <small id="passwordHelp" class="form-text text-danger"></small>
+            </div>
+            <div class="form-group">
+                <label for="card_type">Type de carte de paiement</label>
+                <input type="text" class="form-control" id="card_type" name="Type_de_carte_de_paiement" placeholder=" " required>
+            </div>
+            <div class="form-group">
+                <label for="card_number">Numéro de la carte</label>
+                <input type="text" class="form-control" id="card_number" name="Numéro_de_la_carte" placeholder=" " required>
+            </div>
+            <div class="form-group">
+                <label for="card_name">Nom sur la carte</label>
+                <input type="text" class="form-control" id="card_name" name="Nom_sur_la_carte" placeholder=" " required>
+            </div>
+            <div class="form-group">
+                <label for="card_expiry">Date d'expiration de la carte</label>
+                <input type="text" class="form-control" id="card_expiry" name="Date_d_expiration_de_la_carte" placeholder="MM/AA" required>
+            </div>
+            <div class="form-group">
+                <label for="card_security">Code de sécurité</label>
+                <input type="text" class="form-control" id="card_security" name="Code_de_sécurité" placeholder=" " required>
             </div>
             <p class="terms">En créant un compte, tu acceptes les conditions d'utilisation et tu confirmes avoir lu la politique de confidentialité de OMNES IMMOBILIER.</p>
             <button type="submit" class="btn btn-primary">Créer un compte</button>
@@ -138,5 +166,20 @@
             <br><p>Vous possédez déjà un compte ? <a href="identification.php">Identifiez-vous</a></p>
         </div>
     </div>
+
+    <!-- Inclusion de jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+    $(document).ready(function(){
+        $('#registrationForm').submit(function(event){
+            var password = $('#password').val();
+            var confirmPassword = $('#confirm_password').val();
+            if (password !== confirmPassword) {
+                $('#passwordHelp').text('Les mots de passe ne correspondent pas.');
+                event.preventDefault(); // Empêche l'envoi du formulaire
+            }
+        });
+    });
+    </script>
 </body>
 </html>
