@@ -4,7 +4,7 @@ session_start();
 // Connexion à la base de données
 $bdd = new PDO('mysql:host=localhost;dbname=projet_piscine;charset=utf8', 'root', '');
 
-//Vérifier si le client est connecté, sinon rediriger vers la page d'identification
+// Vérifier si le client est connecté, sinon rediriger vers la page d'identification
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true || $_SESSION['user_type'] !== 'client') {
     header("Location: identification.php");
     exit;
@@ -83,7 +83,7 @@ $consultations = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <a href="recherche.php">Recherche</a>
         <a href="rendezvous.php">Rendez-vous</a>
         <a href="espace_client.php">Espace Client</a>
-        <a href="accueil.php" class="logout-btn">Déconnexion</a>
+        <a href="deconnexion.php" class="logout-btn">Déconnexion</a>
     </div>
     
     <div class="container">
