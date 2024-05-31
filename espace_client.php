@@ -2,7 +2,11 @@
 session_start();
 
 // Connexion à la base de données
-$bdd = new PDO('mysql:host=localhost;dbname=projet_piscine;charset=utf8', 'root', '');
+try {
+    $bdd = new PDO('mysql:host=localhost;dbname=projet_piscine;charset=utf8', 'root', '');
+} catch (Exception $e) {
+    die('Erreur : ' . $e->getMessage());
+}
 
 // Vérifier si le client est connecté, sinon rediriger vers la page d'identification
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true || $_SESSION['user_type'] !== 'client') {
@@ -10,12 +14,22 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true || $_SESSI
     exit;
 }
 
+// Afficher la session pour debugging
+echo '<pre>';
+print_r($_SESSION);
+echo '</pre>';
+
 // Sélectionner les consultations de l'utilisateur connecté
 $id_client = $_SESSION['user_id']; // Supposons que 'user_id' contienne l'ID du client connecté
 
 $stmt = $bdd->prepare("SELECT * FROM Consultation WHERE id_client = :id_client");
 $stmt->execute(array(':id_client' => $id_client));
 $consultations = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Afficher les consultations pour debugging
+echo '<pre>';
+print_r($consultations);
+echo '</pre>';
 ?>
 
 <!DOCTYPE html>
