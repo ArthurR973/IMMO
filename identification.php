@@ -10,6 +10,21 @@
 
     $error_message = "";
 
+    // Vérifie si l'utilisateur est déjà connecté
+if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
+    // Redirige vers la page correspondante en fonction du type d'utilisateur
+    if ($_SESSION['user_type'] === 'admin') {
+        header("Location: espace_admin.php");
+        exit();
+    } elseif ($_SESSION['user_type'] === 'client') {
+        header("Location: client_connexion.php");
+        exit();
+    } elseif ($_SESSION['user_type'] === 'agent') {
+        header("Location: agent_connexion.php");
+        exit();
+    }
+}
+
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Récupérez les données du formulaire
         $Nom = $_POST['name'];
