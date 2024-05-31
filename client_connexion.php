@@ -1,39 +1,51 @@
 <?php
 session_start();
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "projet_piscine"; // Remplacez par le nom correct de votre base de données
-
-try {
-    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Connection failed: " . $e->getMessage());
+// Vérifie si les variables de session sont définies
+if (isset($_SESSION['name']) && isset($_SESSION['surname'])) {
+    // Récupère les valeurs des variables de session
+    $Nom = $_SESSION['name'];
+    $Prénom = $_SESSION['surname'];
+} else {
+    // Redirige vers identification.php si les variables de session ne sont pas définies
+    header("Location: identification.php");
+    exit();
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $courriel = $_POST['courriel'];
-    $mot_de_passe = $_POST['mot_de_passe'];
+// Vérifie si le formulaire a été soumis
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Connexion à la base de données
+    $servername = "localhost";
+    $username = "root"; // Remplacez par votre nom d'utilisateur
+    $password = ""; // Remplacez par votre mot de passe
+    $dbname = "projet_piscine";
+    $conn = new mysqli($servername, $username, $password, $dbname);
 
-    $stmt = $conn->prepare("SELECT * FROM clients WHERE courriel = :courriel AND Mot_de_passe = :mot_de_passe");
-    $stmt->execute(['courriel' => $courriel, 'mot_de_passe' => $mot_de_passe]);
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    // Vérifiez la connexion
+    if ($conn->connect_error) {
+        die("Connexion échouée: " . $conn->connect_error);
+    }
 
-    if ($user) {
-        $_SESSION['user_id'] = $user['ID'];
-        $_SESSION['user_name'] = $user['Prénom'] . ' ' . $user['Nom'];
+    $Mot_de_passe = $_POST['password'];
+    $Mot_de_passe = $conn->real_escape_string($Mot_de_passe);
+    $sql = "SELECT * FROM clients WHERE Nom = '$Nom' AND Prénom = '$Prénom' AND Mot_de_passe = '$Mot_de_passe'";
+    $result = $conn->query($sql);
+
+    // Vérifie si la requête a retourné des résultats
+    if ($result->num_rows > 0) {
+        // Définir les variables de session
+        $_SESSION['logged_in'] = true;
+        $_SESSION['user_type'] = 'client';
+        $_SESSION['user_id'] = $result->fetch_assoc()['id']; // Assurez-vous que la colonne 'id' existe dans votre table
+
         header("Location: espace_client.php");
         exit();
     } else {
-        echo "Identifiants incorrects. Veuillez réessayer.";
+        // Affiche le message d'erreur si le mot de passe est incorrect
+        $error_message = "Mot de passe incorrect.";
     }
 }
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -80,13 +92,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <label for="password">Mot de passe</label>
                 <input type="password" class="form-control" id="password" name="password" placeholder="Mot de passe" required>
                 <?php
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            // Affiche le message d'erreur si le mot de passe est incorrect
-            if (isset($Mot_de_passe) && $result->num_rows == 0) {
-                echo "<p class='error-message'>Mot de passe incorrect.</p>";
-            }
-        }
-    ?>
+                if (isset($error_message)) {
+                    echo "<p class='error-message'>$error_message</p>";
+                }
+                ?>
             </div>
             <button type="submit" class="btn btn-primary">Se connecter</button>
         </form>

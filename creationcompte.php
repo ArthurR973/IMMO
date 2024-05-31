@@ -121,6 +121,7 @@
             <div class="form-group">
                 <label for="postal_code">Code postal</label>
                 <input type="text" class="form-control" id="postal_code" name="Code_Postal" placeholder=" " required>
+                <div class="error-message" id="postal_code_error"></div>
             </div>
             <div class="form-group">
                 <label for="country">Pays</label>
@@ -129,6 +130,7 @@
             <div class="form-group">
                 <label for="phone">Numéro de téléphone</label>
                 <input type="text" class="form-control" id="phone" name="Numéro_de_téléphone" placeholder=" " required>
+                <div class="error-message" id="phone_error"></div>
             </div>
             <div class="form-group">
                 <label for="password">Mot de passe</label>
@@ -141,11 +143,13 @@
             </div>
             <div class="form-group">
                 <label for="card_type">Type de carte de paiement</label>
-                <input type="text" class="form-control" id="card_type" name="Type_de_carte_de_paiement" placeholder=" " required>
+                <input type="text" class="form-control" id="card_type" name="Type_de_carte_de_paiement" placeholder="Visa/Mastercard" required>
+                <div class="error-message" id="card_type_error"></div>
             </div>
             <div class="form-group">
                 <label for="card_number">Numéro de la carte</label>
-                <input type="text" class="form-control" id="card_number" name="Numéro_de_la_carte" placeholder=" " required>
+                <input type="text" class="form-control" id="card_number" name="Numéro_de_la_carte" placeholder="12 chiffres" required>
+                <div class="error-message" id="card_number_error"></div>
             </div>
             <div class="form-group">
                 <label for="card_name">Nom sur la carte</label>
@@ -153,14 +157,23 @@
             </div>
             <div class="form-group">
                 <label for="card_expiry">Date d'expiration de la carte</label>
-                <input type="text" class="form-control" id="card_expiry" name="Date_d_expiration_de_la_carte" placeholder="MM/AA" required>
+                <input type="text" class="form-control" id="card_expiry" name="Date_d_expiration_de_la_carte" placeholder="AAAA-MM-DD" required>
+                <div class="error-message" id="card_expiry_error"></div>
             </div>
             <div class="form-group">
                 <label for="card_security">Code de sécurité</label>
-                <input type="text" class="form-control" id="card_security" name="Code_de_sécurité" placeholder=" " required>
+                <input type="text" class="form-control" id="card_security" name="Code_de_sécurité" placeholder="CVV" required>
+                <div class="error-message" id="card_security_error"></div>
             </div>
             <p class="terms">En créant un compte, tu acceptes les conditions d'utilisation et tu confirmes avoir lu la politique de confidentialité de OMNES IMMOBILIER.</p>
             <button type="submit" class="btn btn-primary">Créer un compte</button>
+            <?php
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            if ($result_check->num_rows > 0) {
+                echo "<p class='error-message'>Un compte avec cet e-mail ou ce numéro de téléphone existe déjà.</p>";
+            }
+        }
+        ?>
         </form>
         <div class="login-link">
             <br><p>Vous possédez déjà un compte ? <a href="identification.php">Identifiez-vous</a></p>
@@ -172,11 +185,69 @@
     <script>
     $(document).ready(function(){
         $('#registrationForm').submit(function(event){
+            var isValid = true;
+
+            // Validation des champs
+            var postalCode = $('#postal_code').val();
+            if (!/^\d{5}$/.test(postalCode)) {
+                $('#postal_code_error').text('Le code postal doit contenir 5 chiffres.');
+                isValid = false;
+            } else {
+                $('#postal_code_error').text('');
+            }
+
+            var phone = $('#phone').val();
+            if (!/^\d{10}$/.test(phone)) {
+                $('#phone_error').text('Le numéro de téléphone doit contenir 10 chiffres.');
+                isValid = false;
+            } else {
+                $('#phone_error').text('');
+            }
+
+            var cardType = $('#card_type').val();
+            if (cardType !== 'Visa' && cardType !== 'Mastercard') {
+                $('#card_type_error').text('Le type de carte doit être Visa ou Mastercard.');
+                isValid = false;
+            } else {
+                $('#card_type_error').text('');
+            }
+
+            var cardNumber = $('#card_number').val();
+            if (!/^\d{12}$/.test(cardNumber)) {
+                $('#card_number_error').text('Le numéro de la carte doit contenir 12 chiffres.');
+                isValid = false;
+            } else {
+                $('#card_number_error').text('');
+            }
+
+            var cardExpiry = $('#card_expiry').val();
+            if (!/^\d{4}-\d{2}-\d{2}$/.test(cardExpiry)) {
+                $('#card_expiry_error').text('La date d\'expiration doit être au format AAAA-MM-JJ.');
+                isValid = false;
+            } else {
+                $('#card_expiry_error').text('');
+            }
+
+            var cardSecurity = $('#card_security').val();
+            if (!/^\d{3}$/.test(cardSecurity)) {
+                $('#card_security_error').text('Le code de sécurité doit contenir 3 chiffres.');
+                isValid = false;
+            } else {
+                $('#card_security_error').text('');
+            }
+
+            // Validation des mots de passe
             var password = $('#password').val();
             var confirmPassword = $('#confirm_password').val();
             if (password !== confirmPassword) {
                 $('#passwordHelp').text('Les mots de passe ne correspondent pas.');
-                event.preventDefault(); // Empêche l'envoi du formulaire
+                isValid = false;
+            } else {
+                $('#passwordHelp').text('');
+            }
+
+            if (!isValid) {
+                event.preventDefault(); // Empêche l'envoi du formulaire si validation échoue
             }
         });
     });

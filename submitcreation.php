@@ -35,12 +35,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("La connexion a échoué: " . $conn->connect_error);
     }
 
+    // Vérification de l'existence de l'adresse e-mail ou du numéro de téléphone
+    $courriel = $conn->real_escape_string($courriel);
+    $numTel = $conn->real_escape_string($numTel);
+    $sql_check = "SELECT * FROM clients WHERE courriel = '$courriel' OR Numéro_de_téléphone = '$numTel'";
+    $result_check = $conn->query($sql_check);
+
+    if ($result_check->num_rows > 0) {
+        echo "<script>alert('Un compte avec cet e-mail ou ce numéro de téléphone existe déjà.'); window.history.back();</script>";
+        exit;
+    }
+
     // Insertion des données dans la table clients
     $sql = "INSERT INTO clients (Nom, Prénom, courriel, Mot_de_passe, Adresse_Ligne_1, Ville, Code_Postal, Pays, Numéro_de_téléphone, Type_de_carte_de_paiement, Numéro_de_la_carte, Nom_sur_la_carte, Date_d_expiration_de_la_carte, Code_de_sécurité)
             VALUES ('$nom', '$prenom', '$courriel', '$motDePasse', '$adresseLigne1', '$ville', '$codePostal', '$pays', '$numTel', '$typeCarte', '$numCarte', '$nomCarte', '$dateExpiration', '$codeSecurite')";
-    
+
     if ($conn->query($sql) === TRUE) {
-        echo "<script>alert('Nouveau compte créé avec succès'); window.location.href = 'taccueil.html';</script>";
+        echo "<script>alert('Nouveau compte créé avec succès'); window.location.href = 'identification.php';</script>";
     } else {
         echo "<script>alert('Erreur: " . $conn->error . "'); window.history.back();</script>";
     }
