@@ -26,10 +26,11 @@ if (isset($_POST['delete_agent_id'])) {
 // Ajout d'un agent
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['nom'])) {
     // Récupération des données du formulaire
-    $nom = $_POST['nom'] ?? '';
-    $prenom = $_POST['prenom'] ?? '';
+    $nom = strtoupper($_POST['nom'] ?? ''); // Convertir en majuscules
+    $prenom = strtoupper($_POST['prenom'] ?? ''); // Convertir en majuscules
+
     $specialite = $_POST['specialite'] ?? '';
-    $courriel = $_POST['courriel'] ?? '';
+    $courriel = strtolower($prenom) . "@omnesimmobilier.fr"; // Convertir en minuscules pour le courriel
     $telephone = $_POST['telephone'] ?? '';
     $bureau = ''; // À définir selon la spécialité
     $cv = ''; // À définir
@@ -38,32 +39,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['nom'])) {
     $mot_de_passe = ''; // À définir
     $honoraire = ''; // À définir
 
-    // Génération du code au hasard à deux chiffres
+    // Génération du mot de passe aléatoire à deux chiffres
     $mot_de_passe = rand(10, 99);
 
-    // Assignation du numéro d'identification
+        // Assignation du numéro d'identification
     $numero_identification = 50 + $mot_de_passe;
 
+
     // Création de l'adresse e-mail à partir du prénom de l'agent
-    $courriel = $prenom . "@omnesimmobilier.fr";
+    $courriel = strtolower($prenom) . "@omnesimmobilier.fr"; // Réassigner le courriel en minuscules
 
     // Définition de la valeur de l'honoraire en fonction de la spécialité
     switch ($specialite) {
         case "Immobilier résidentiel":
             $honoraire = 12;
-            $bureau = 1;
+            $bureau = 'Bureau 1';
             break;
         case "Immobilier commercial":
             $honoraire = 13;
-            $bureau = 2;
+            $bureau = 'Bureau 2';
             break;
         case "Appartement à louer":
             $honoraire = 14;
-            $bureau = 3;
+            $bureau = 'Bureau 3';
             break;
         case "Le terrain":
             $honoraire = 15;
-            $bureau = 4;
+            $bureau = 'Bureau 4';
             break;
         default:
             $honoraire = NULL;
@@ -71,9 +73,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['nom'])) {
     }
 
     // Insertion des données dans la base de données
-    $sql = "INSERT INTO agent_immo (numero_identification, nom, prenom, specialite, honoraire, courriel, bureau) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO agent_immo (numero_identification, nom, prenom, specialite, honoraire, courriel, bureau, mot_de_passe) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("isssiss", $numero_identification, $nom, $prenom, $specialite, $honoraire, $courriel, $bureau);
+    $stmt->bind_param("isssisss", $numero_identification, $nom, $prenom, $specialite, $honoraire, $courriel, $bureau, $mot_de_passe);
+
     if ($stmt->execute()) {
         $success_message = "Nouvel agent ajouté avec succès.";
     } else {
@@ -170,7 +173,8 @@ $result = $conn->query($sql);
     <a href="accueil.php">Accueil</a>
     <a href="tout_parcourir.php">Tout Parcourir</a>
     <a href="recherche.php">Recherche</a>
-    <a href="espace_admin.php">Espace Administrateur</a>
+    <a href="rendezvous.php">Rendez-vous</a>
+    <a href="espace_admin.php">Votre compte</a>
 </div>
 
 <div class="container">
@@ -180,7 +184,7 @@ $result = $conn->query($sql);
             <?php
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
-                    $id = $row['id'] ?? 'N/A';
+                    $id = $row['numero_identification'] ?? 'N/A';
                     $nom = $row['nom'] ?? 'N/A';
                     $prenom = $row['prenom'] ?? 'N/A';
                     $specialite = $row['specialite'] ?? 'N/A';
@@ -214,13 +218,15 @@ $result = $conn->query($sql);
             <input type="text" class="form-control" id="prenom" name="prenom" required>
         </div>
         <div class="form-group">
-            <label for="cv">CV :</label>
-            <input type="file" class="form-control-file" id="cv" name="cv" required>
-        </div>
-        <div class="form-group">
-            <label for="photo">Photo :</label>
-            <input type="file" class="form-control-file" id="photo" name="photo" required>
-        </div>
+    <label for="cv">CV :</label>
+    <input type="file" class="form-control-file" id="cv" name="cv" accept=".html" required>
+    <!-- Le paramètre 'accept' spécifie que seuls les fichiers avec l'extension .html sont autorisés -->
+    </div>
+    <div class="form-group">
+    <label for="photo">Photo :</label>
+    <input type="file" class="form-control-file" id="photo" name="photo" accept=".jpg" required>
+    <!-- Le paramètre 'accept' spécifie que seuls les fichiers avec l'extension .jpg sont autorisés -->
+    </div>
         <div class="form-group">
             <label for="specialite">Spécialité :</label>
             <select class="form-control" id="specialite" name="specialite" required>
@@ -236,6 +242,7 @@ $result = $conn->query($sql);
             <input type="tel" class="form-control" id="telephone" name="telephone" pattern="[0-9]{10}" title="Entrez un numéro de téléphone à 10 chiffres" required>
         </div>
         <button type="submit" class="btn btn-primary">Ajouter</button>
+        
     </form>
 </div>
 
@@ -248,9 +255,17 @@ $result = $conn->query($sql);
 </div>
 
 <script>
-function confirmDelete() {
-    return confirm("Êtes-vous sûr de vouloir le supprimer ?");
-}
+    function confirmDelete() {
+        return confirm("Êtes-vous sûr de vouloir le supprimer ?");
+    }
+
+    function agentAddedSuccessfully() {
+        alert("Agent ajouté avec succès !");
+    }
+
+    function agentDeletedSuccessfully() {
+        alert("Agent supprimé avec succès !");
+    }
 </script>
 </body>
 </html>

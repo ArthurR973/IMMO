@@ -86,7 +86,7 @@ $consultations = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <a href="tout_parcourir.php">Tout Parcourir</a>
         <a href="recherche.php">Recherche</a>
         <a href="rendezvous.php">Rendez-vous</a>
-        <a href="espace_client.php">Espace Client</a>
+        <a href="espace_client.php">Votre compte</a>
         <a href="deconnexion.php" class="logout-btn">Déconnexion</a>
     </div>
     
