@@ -16,7 +16,7 @@ if ($conn->connect_error) {
 // Suppression d'un agent
 if (isset($_POST['delete_agent_id'])) {
     $agent_id = $_POST['delete_agent_id'];
-    $sql = "DELETE FROM agent_immo WHERE id = ?";
+    $sql = "DELETE FROM agent_immo WHERE numero_identification = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $agent_id);
     $stmt->execute();
@@ -29,15 +29,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['nom'])) {
     $nom = $_POST['nom'] ?? '';
     $prenom = $_POST['prenom'] ?? '';
     $specialite = $_POST['specialite'] ?? '';
+    $courriel = $_POST['courriel'] ?? '';
+    $telephone = $_POST['telephone'] ?? '';
+    $bureau = ''; // À définir selon la spécialité
+    $cv = ''; // À définir
+    $photo = ''; // À définir
+    $numero_identification = ''; // À définir
+    $mot_de_passe = ''; // À définir
+    $honoraire = ''; // À définir
 
     // Génération du code au hasard à deux chiffres
-    $code = rand(10, 99);
+    $mot_de_passe = rand(10, 99);
 
     // Assignation du numéro d'identification
-    $numero_identification = 50 + $code;
+    $numero_identification = 50 + $mot_de_passe;
 
     // Création de l'adresse e-mail à partir du prénom de l'agent
-    $courriel = $prenom . "@omnesimmobilier";
+    $courriel = $prenom . "@omnesimmobilier.fr";
 
     // Définition de la valeur de l'honoraire en fonction de la spécialité
     switch ($specialite) {
@@ -212,10 +220,6 @@ $result = $conn->query($sql);
         <div class="form-group">
             <label for="photo">Photo :</label>
             <input type="file" class="form-control-file" id="photo" name="photo" required>
-        </div>
-        <div class="form-group">
-            <label for="courriel">Courriel :</label>
-            <input type="email" class="form-control" id="courriel" name="courriel" required>
         </div>
         <div class="form-group">
             <label for="specialite">Spécialité :</label>
