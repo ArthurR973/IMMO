@@ -37,14 +37,17 @@ $agents = $statement_agents->fetchAll(PDO::FETCH_ASSOC);
             font-family: 'Lora', serif;
             color: #333;
         }
-        .header, .footer {
+        .header {
             background-color: #333;
             color: white;
-            text-align: center;
             padding: 20px;
+            text-align: center;
         }
-        .header h1, .footer p {
+        .header h1 {
             font-family: 'Montserrat', sans-serif;
+            color: white;
+            font-size: 2.5rem;
+            margin: 0;
         }
         .navigation {
             background-color: #f8f9fa;
@@ -71,6 +74,43 @@ $agents = $statement_agents->fetchAll(PDO::FETCH_ASSOC);
         .results h3 {
             margin: 10px 0;
         }
+        .search-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .search-container input {
+            width: 50%;
+            display: inline-block;
+        }
+        .results ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .results li {
+            background-color: #f8f9fa;
+            margin: 10px 0;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .btn-black {
+            background-color: #000;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .btn-black:hover {
+            background-color: #444;
+            color: #fff;
+        }
+        .footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
     </style>
 </head>
 
@@ -86,20 +126,20 @@ $agents = $statement_agents->fetchAll(PDO::FETCH_ASSOC);
         <a href="accueil.php">Accueil</a>
         <a href="tout_parcourir.php">Tout Parcourir</a>
         <a href="recherche.php">Recherche</a>
-        <a href="rendezvous.php">Rendez-vous</a>
+        <a href="rendez_vous.php">Rendez-vous</a>
         <a href="identification.php">Votre Compte</a>
     </div>
     
     <div class="container">
-        <h1>Résultats de recherche</h1>
+        <h1 class="text-center">Résultats de recherche</h1>
         <div class="search-container">
             <form action="recherche.php" method="get">
                 <input type="text" name="q" value="<?php echo $q; ?>" placeholder="Rechercher un bien ou un agent" class="form-control" />
-                <button type="submit" class="btn btn-primary mt-2">Rechercher</button>
+                <button type="submit" class="btn btn-black mt-2">Rechercher</button>
             </form>
         </div>
 
-        <h2>Biens immobiliers</h2>
+        <h2 class="text-center">Biens immobiliers</h2>
         <div class="results">
             <?php if (count($biens) > 0): ?>
                 <ul>
@@ -113,11 +153,11 @@ $agents = $statement_agents->fetchAll(PDO::FETCH_ASSOC);
                     <?php endforeach; ?>
                 </ul>
             <?php else: ?>
-                <p>Aucun bien immobilier trouvé.</p>
+                <p class="text-center">Aucun bien immobilier trouvé.</p>
             <?php endif; ?>
         </div>
 
-        <h2>Agents immobiliers</h2>
+        <h2 class="text-center">Agents immobiliers</h2>
         <div class="results">
             <?php if (count($agents) > 0): ?>
                 <ul>
@@ -127,11 +167,12 @@ $agents = $statement_agents->fetchAll(PDO::FETCH_ASSOC);
                             <h3><?php echo $agent['prenom'] . ' ' . $agent['nom']; ?></h3>
                             <p>Spécialité : <?php echo $agent['specialite']; ?></p>
                             <p>Bureau : <?php echo $agent['bureau']; ?></p>
+                            <a href="contacter_agent.php?agent_id=<?php echo $agent['numero_identification']; ?>" class="btn btn-black">Contacter l'agent</a>
                         </li>
                     <?php endforeach; ?>
                 </ul>
             <?php else: ?>
-                <p>Aucun agent immobilier trouvé.</p>
+                <p class="text-center">Aucun agent immobilier trouvé.</p>
             <?php endif; ?>
         </div>
     </div>
