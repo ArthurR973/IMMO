@@ -150,7 +150,6 @@ if ($result === FALSE) {
                     echo "<p>Agent : " . $row["prenom"] . " " . $row["nom"] . "</p>";
                     echo "<p>Email : <a href='mailto:" . $row["courriel"] . "'>" . $row["courriel"] . "</a></p>";
                     echo "<p>Téléphone : " . $row["tel"] . "</p>";
-                    echo "<p>Prix : " . number_format($prix, 2, ',', ' ') . " €</p>";
                     echo "<a href='contacter_agent.php?agent_id=" . $row["numero_identification"] . "' class='btn btn-light'>Contactez l'agent</a>";
                     echo "</div>";
                     echo "</div>";
