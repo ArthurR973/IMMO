@@ -68,10 +68,6 @@ session_start();
     </style>
 </head>
 <body>
-if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
-        echo '<a href="logout.php" class="logout-btn">Déconnexion</a>';
-    }
-
 <div class="wrapper">
     <div class="header">
         <h1>OMNES IMMOBILIER</h1>
@@ -79,11 +75,18 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
     </div>
    
     <div class="navigation">
-        <a href="#accueil">Accueil</a>
+        <a href="accueil.php">Accueil</a>
         <a href="tout_parcourir.php">Tout Parcourir</a>
         <a href="recherche.php">Recherche</a>
         <a href="#rendez-vous">Rendez-vous</a>
-        <a href="identification.php">Votre Compte</a>
+        <?php
+        // Vérifie si l'utilisateur est connecté
+        if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
+            echo '<a href="espace_admin.php">Votre Compte</a>';
+        } else {
+            echo '<a href="identification.php">Votre Compte</a>';
+        }
+        ?>
     </div>
    
     <div id="accueil" class="section">
