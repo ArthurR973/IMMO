@@ -42,13 +42,13 @@ $scheduleData = getScheduleData($conn);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prendre un RDV - Thierry MARX</title>
+    <title>Prendre un RDV</title>
     <link rel="stylesheet" href="prendre_RDV.css">
     <script src="prendre_RDV.js" defer></script>
 </head>
 <body>
     <div class="agent-card">
-        <h2>Emploi du temps de Thierry MARX</h2>
+        <h2>Emploi du temps</h2>
         <table class="schedule large">
             <thead>
                 <tr>
