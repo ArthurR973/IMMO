@@ -79,13 +79,14 @@ session_start();
         <a href="tout_parcourir.php">Tout Parcourir</a>
         <a href="recherche.php">Recherche</a>
         <a href="#rendez-vous">Rendez-vous</a>
+        <a href="identification.php">Votre Compte</a>'
         <?php
         // Vérifie si l'utilisateur est connecté
-        if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
-            echo '<a href="espace_admin.php">Votre Compte</a>';
-        } else {
-            echo '<a href="identification.php">Votre Compte</a>';
-        }
+        //if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
+        //    echo '<a href="espace_admin.php">Votre Compte</a>';
+        //} else {
+        //    echo '<a href="identification.php">Votre Compte</a>';
+        //}
         ?>
     </div>
    
