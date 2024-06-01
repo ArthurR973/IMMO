@@ -30,36 +30,128 @@ if ($result === FALSE) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Immobilier Résidentiel - Omnes Immobilier</title>
-    <link rel="stylesheet" href="style_toutparcourir.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Lora:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Lora', serif;
+            color: #333;
+            background-color: #fff;
+        }
+        .header {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .header h1 {
+            font-family: 'Montserrat', sans-serif;
+            color: white;
+            font-size: 2.5rem;
+            margin: 0;
+        }
+        .navigation {
+            background-color: #f8f9fa;
+            padding: 10px;
+            text-align: center;
+        }
+        .navigation a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+        .container {
+            padding: 50px 20px;
+        }
+        .property-list {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .property-card {
+            position: relative;
+            width: 50%;
+            margin: 20px 0;
+            overflow: hidden;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .property-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .property-info {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            opacity: 0;
+            transition: opacity 0.5s;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .property-card:hover .property-info {
+            opacity: 1;
+        }
+        .property-info h3 {
+            margin-bottom: 10px;
+        }
+        .property-info p {
+            margin-bottom: 5px;
+        }
+        .property-info a {
+            color: white;
+            text-decoration: underline;
+        }
+        .footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>Omnes Immobilier</h1>
-        <nav>
-            <ul>
-                <li><a href="accueil.php">Accueil</a></li>
-                <li><a href="tout_parcourir.php">Tout Parcourir</a></li>
-                <li><a href="recherche.php">Recherche</a></li>
-                <li><a href="rendez_vous.php">Rendez-vous</a></li>
-                <li><a href="identification.php">Votre Compte</a></li>
-            </ul>
-        </nav>
-    </header>
 
-    <main>
-        <h2>Immobilier Résidentiel</h2>
+<div class="wrapper">
+    <div class="header">
+        <h1>OMNES IMMOBILIER</h1>
+        <p>444 N. Rue Principale, Charlotte | +33 01 23 45 67 89</p>
+    </div>
+
+    <div class="navigation">
+        <a href="accueil.php">Accueil</a>
+        <a href="tout_parcourir.php">Tout Parcourir</a>
+        <a href="recherche.php">Recherche</a>
+        <a href="rendez_vous.php">Rendez-vous</a>
+        <a href="identification.php">Votre Compte</a>
+    </div>
+    
+    <div class="container">
+        <h2 class="text-center">Immobilier Résidentiel</h2>
         <div class="property-list">
             <?php
             if ($result->num_rows > 0) {
                 while($row = $result->fetch_assoc()) {
                     echo "<div class='property-card'>";
                     echo "<img src='" . $row["photo"] . "' alt='Photo du bien'>";
+                    echo "<div class='property-info'>";
                     echo "<h3>" . $row["description"] . "</h3>";
                     echo "<p>Adresse : " . $row["adresse"] . "</p>";
                     echo "<p>Agent : " . $row["prenom"] . " " . $row["nom"] . "</p>";
                     echo "<p>Email : <a href='mailto:" . $row["courriel"] . "'>" . $row["courriel"] . "</a></p>";
                     echo "<p>Téléphone : " . $row["tel"] . "</p>";
-                    echo "<a href='contacter_agent.php?agent_id=" . $row["numero_identification"] . "'>Contactez l'agent</a>";
+                    echo "<a href='contacter_agent.php?agent_id=" . $row["numero_identification"] . "' class='btn btn-light'>Contactez l'agent</a>";
+                    echo "</div>";
                     echo "</div>";
                 }
             } else {
@@ -68,22 +160,16 @@ if ($result === FALSE) {
             $conn->close();
             ?>
         </div>
-    </main>
+    </div>
 
-    <footer>
-        <p>Contactez-nous : <a href="mailto:contact@omnesimmobilier.fr">contact@omnesimmobilier.fr</a></p>
-        <p>Téléphone : +33 01 23 45 67 89</p>
-        <div id="map"></div>
-    </footer>
+    <div class="footer">
+        <p>© 2024 Omnes Immobilier - Tous droits réservés</p>
+        <p>Contactez-nous : email@omnesimmobilier.fr | +33 01 23 45 67 89</p>
+    </div>
+</div>
 
-    <script>
-        function initMap() {
-            var map = new google.maps.Map(document.getElementById('map'), {
-                center: {lat: 44.8378, lng: -0.5792},
-                zoom: 12
-            });
-        }
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

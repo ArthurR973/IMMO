@@ -71,7 +71,7 @@ session_start();
         <a href="tout_parcourir.php">Tout Parcourir</a>
         <a href="recherche.php">Recherche</a>
         <a href="#rendez-vous">Rendez-vous</a>
-        <a href="espace_admin.php">Votre Compte</a>';
+        <a href="espace_admin.php">Votre Compte</a>
     </div>
    
     <div class="container">
