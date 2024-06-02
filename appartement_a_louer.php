@@ -13,11 +13,10 @@ if ($conn->connect_error) {
 }
 
 // Requête pour récupérer les appartements à louer et leurs agents
-$sql = "SELECT BIEN.numero, BIEN.photo, BIEN.description, BIEN.adresse, AGENT_IMMO.numero_identification, AGENT_IMMO.prenom, AGENT_IMMO.nom, AGENT_IMMO.courriel, AGENT_IMMO.tel
-        FROM BIEN
+$sql = "SELECT BIEN.type, BIEN.numero, BIEN.photo, BIEN.description, BIEN.adresse, BIEN.prix, AGENT_IMMO.prenom, AGENT_IMMO.nom, AGENT_IMMO.courriel, AGENT_IMMO.tel, BIEN.numero  
+        FROM BIEN 
         JOIN AGENT_IMMO ON BIEN.id_agent = AGENT_IMMO.numero_identification
         WHERE BIEN.type = 'Appartement à louer'";
-
 $result = $conn->query($sql);
 if ($result === FALSE) {
     die("Erreur dans la requête SQL : " . $conn->error);
@@ -146,11 +145,13 @@ if ($result === FALSE) {
                     echo "<img src='" . $row["photo"] . "' alt='Photo de l'appartement'>";
                     echo "<div class='property-info'>";
                     echo "<h3>" . $row["description"] . "</h3>";
+                    echo "<p>Numéro du bien : " . $row["numero"] . "</p>";
                     echo "<p>Adresse : " . $row["adresse"] . "</p>";
                     echo "<p>Agent : " . $row["prenom"] . " " . $row["nom"] . "</p>";
                     echo "<p>Email : <a href='mailto:" . $row["courriel"] . "'>" . $row["courriel"] . "</a></p>";
                     echo "<p>Téléphone : " . $row["tel"] . "</p>";
-                    echo "<a href='contacter_agent.php?agent_id=" . $row["numero_identification"] . "' class='btn btn-light'>Contactez l'agent</a>";
+                    echo "<p>Prix: " . $row["prix"] . " €</p>";
+                    echo "<a href='contacter_agent.php?agent_id=" . $row["numero"] . "' class='btn btn-light'>Contactez l'agent</a>";
                     echo "</div>";
                     echo "</div>";
                 }

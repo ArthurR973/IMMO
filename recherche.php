@@ -8,19 +8,20 @@ if (isset($_GET['q'])) {
     $q = htmlspecialchars($_GET['q']);
 }
 
-// Requête pour rechercher les biens
-$query_biens = "SELECT BIEN.*, AGENT_IMMO.nom AS agent_nom, AGENT_IMMO.prenom AS agent_prenom FROM BIEN 
-                LEFT JOIN AGENT_IMMO ON BIEN.id_agent = AGENT_IMMO.numero_identification 
-                WHERE BIEN.description LIKE :q OR BIEN.type LIKE :q OR BIEN.adresse LIKE :q";
-$statement_biens = $bdd->prepare($query_biens);
-$statement_biens->execute(array(':q' => '%' . $q . '%'));
-$biens = $statement_biens->fetchAll(PDO::FETCH_ASSOC);
-
-// Requête pour rechercher les agents immobiliers
-$query_agents = "SELECT * FROM AGENT_IMMO WHERE nom LIKE :q OR prenom LIKE :q OR specialite LIKE :q OR bureau LIKE :q";
-$statement_agents = $bdd->prepare($query_agents);
-$statement_agents->execute(array(':q' => '%' . $q . '%'));
-$agents = $statement_agents->fetchAll(PDO::FETCH_ASSOC);
+// Requête pour rechercher les biens et les agents immobiliers
+$query_biens_agents = "SELECT BIEN.*, AGENT_IMMO.nom AS agent_nom, AGENT_IMMO.prenom AS agent_prenom, AGENT_IMMO.courriel, AGENT_IMMO.tel, AGENT_IMMO.photo AS agent_photo 
+                       FROM BIEN 
+                       LEFT JOIN AGENT_IMMO ON BIEN.id_agent = AGENT_IMMO.numero_identification 
+                       WHERE BIEN.description LIKE :q 
+                       OR BIEN.type LIKE :q 
+                       OR BIEN.adresse LIKE :q
+                       OR AGENT_IMMO.nom LIKE :q 
+                       OR AGENT_IMMO.prenom LIKE :q 
+                       OR AGENT_IMMO.specialite LIKE :q 
+                       OR AGENT_IMMO.bureau LIKE :q";
+$statement_biens_agents = $bdd->prepare($query_biens_agents);
+$statement_biens_agents->execute(array(':q' => '%' . $q . '%'));
+$biens_agents = $statement_biens_agents->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -139,40 +140,28 @@ $agents = $statement_agents->fetchAll(PDO::FETCH_ASSOC);
             </form>
         </div>
 
-        <h2 class="text-center">Biens immobiliers</h2>
+        <h2 class="text-center">Résultats de recherche</h2>
         <div class="results">
-            <?php if (count($biens) > 0): ?>
+            <?php if (count($biens_agents) > 0): ?>
                 <ul>
-                    <?php foreach ($biens as $bien) : ?>
+                    <?php foreach ($biens_agents as $bien) : ?>
                         <li>
                             <img src="<?php echo $bien['photo']; ?>" alt="Photo du bien">
                             <h3><?php echo $bien['description']; ?></h3>
-                            <p><?php echo $bien['adresse']; ?></p>
-                            <p>Agent affilié : <?php echo $bien['agent_prenom'] . ' ' . $bien['agent_nom']; ?></p>
+                            <p>Numéro du bien : <?php echo $bien['numero']; ?></p>
+                            <p>Adresse : <?php echo $bien['adresse']; ?></p>
+                            <p>Prix: <?php echo $bien['prix']; ?> €</p>
+                            <h4>Agent affilié</h4>
+                            <img src="<?php echo $bien['agent_photo']; ?>" alt="Photo de l'agent">
+                            <p>Nom : <?php echo $bien['agent_prenom'] . ' ' . $bien['agent_nom']; ?></p>
+                            <p>Email : <a href='mailto:<?php echo $bien['courriel']; ?>'><?php echo $bien['courriel']; ?></a></p>
+                            <p>Téléphone : <?php echo $bien['tel']; ?></p>
+                            <a href="contacter_agent.php?agent_id=<?php echo $bien['id_agent']; ?>" class="btn btn-black">Contactez l'agent</a>
                         </li>
                     <?php endforeach; ?>
                 </ul>
             <?php else: ?>
-                <p class="text-center">Aucun bien immobilier trouvé.</p>
-            <?php endif; ?>
-        </div>
-
-        <h2 class="text-center">Agents immobiliers</h2>
-        <div class="results">
-            <?php if (count($agents) > 0): ?>
-                <ul>
-                    <?php foreach ($agents as $agent) : ?>
-                        <li>
-                            <img src="<?php echo $agent['photo']; ?>" alt="Photo de l'agent">
-                            <h3><?php echo $agent['prenom'] . ' ' . $agent['nom']; ?></h3>
-                            <p>Spécialité : <?php echo $agent['specialite']; ?></p>
-                            <p>Bureau : <?php echo $agent['bureau']; ?></p>
-                            <a href="contacter_agent.php?agent_id=<?php echo $agent['numero_identification']; ?>" class="btn btn-black">Contacter l'agent</a>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-            <?php else: ?>
-                <p class="text-center">Aucun agent immobilier trouvé.</p>
+                <p class="text-center">Aucun résultat trouvé.</p>
             <?php endif; ?>
         </div>
     </div>
