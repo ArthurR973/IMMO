@@ -1,12 +1,12 @@
 <?php
 session_start();
-
+/*
 // Vérifier si l'agent est connecté, sinon rediriger vers la page d'identification
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true || $_SESSION['user_type'] !== 'agent') {
     header("Location: identification.php"); // Rediriger vers la page d'identification
     exit;
 }
-
+*/
 // Simulation des données de l'agent (à remplacer par les données de votre base de données)
 $agent_name = "John Doe";
 $agent_email = "john.doe@example.com";

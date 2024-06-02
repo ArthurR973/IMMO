@@ -79,6 +79,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             display: block;
             margin: 0 auto 20px;
         }
+        .user-info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .user-info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .user-info p {
+            margin: 0 10px;
+        }
+        .user-info p:first-child {
+            margin-left: 0;
+        }
+        .modify-link {
+            color: #007bff;
+            text-decoration: underline;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        .modify-link:hover {
+            color: #0056b3;
+        }
     </style>
 </head>
 <body>
@@ -87,6 +114,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <img src="logotest.png" alt="Logo Omnes Immobilier" class="logo">
         </a>
         <h2 class="form-title">Connexion Client</h2>
+        <div class="user-info">
+        <p><?php echo htmlspecialchars($Prénom); ?>
+            <?php echo htmlspecialchars($Nom); ?>
+            <a href="identification.php" class="modify-link">Modifier</a></p>
+        </div>
         <form method="post" action="client_connexion.php">
             <div class="form-group">
                 <label for="password">Mot de passe</label>

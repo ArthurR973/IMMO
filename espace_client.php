@@ -34,14 +34,17 @@ try {
             font-family: 'Lora', serif;
             color: #333;
         }
-        .header, .footer {
+        .header {
             background-color: #333;
             color: white;
-            text-align: center;
             padding: 20px;
+            text-align: center;
         }
-        .header h1, .footer p {
+        .header h1 {
             font-family: 'Montserrat', sans-serif;
+            color: white;
+            font-size: 2.5rem;
+            margin: 0;
         }
         .navigation {
             background-color: #f8f9fa;
@@ -54,44 +57,53 @@ try {
             color: #333;
             font-weight: bold;
         }
-        .navigation a:hover {
-            background-color: #ddd;
-            color: black;
+        .welcome {
+            background-color: #f8f9fa;
+            color: #333;
+            padding: 50px;
+            text-align: center;
         }
-        .container {
+        .welcome h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        .welcome p {
+            font-size: 1rem;
+        }
+        .event-section {
             padding: 50px 20px;
+            text-align: center;
         }
-        .results img {
-            max-width: 200px;
+        .carousel-item img {
+            width: 100%;
             height: auto;
         }
-        .results h3 {
-            margin: 10px 0;
-        }
-        .logout-btn {
-            float: right;
+        .footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
         }
     </style>
 </head>
 <body>
-
 <div class="wrapper">
     <div class="header">
         <h1>OMNES IMMOBILIER</h1>
         <p>444 N. Rue Principale, Charlotte | +33 01 23 45 67 89</p>
     </div>
-
+   
     <div class="navigation">
         <a href="accueil.php">Accueil</a>
         <a href="tout_parcourir.php">Tout Parcourir</a>
         <a href="recherche.php">Recherche</a>
         <a href="rendezvous.php">Rendez-vous</a>
-        <a href="espace_client.php">Votre compte</a>
-        <a href="deconnexion.php" class="logout-btn">Déconnexion</a>
+        <a href="identification.php">Votre Compte</a>
+        <!--<a href="deconnexion.php" class="logout-btn">Déconnexion</a>-->
     </div>
-    
     <div class="container">
-        <h1>Espace Client</h1>
+        <h1>Votre Espace</h1>
         <h2>Historique des Consultations Immobilières</h2>
         <div class="consultation-history">
             <?php if (!empty($consultations)): ?>
