@@ -12,69 +12,31 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Vérifier si 'agent_id' est défini dans $_GET
-if (!isset($_GET['agent_id'])) {
-    die("Erreur : l'ID de l'agent n'est pas spécifié.");
-}
-
-$agent_id = $_GET['agent_id'];
-
-// Débogage : Afficher l'agent_id
-echo "Debug: agent_id = " . $agent_id . "<br>";
-
-// Si la requête est POST, mettre à jour les disponibilités
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $disponibilites = [
-        'lundi_matin' => $_POST['lundi_matin'],
-        'lundi_apres_midi' => $_POST['lundi_apres_midi'],
-        'mardi_matin' => $_POST['mardi_matin'],
-        'mardi_apres_midi' => $_POST['mardi_apres_midi'],
-        'mercredi_matin' => $_POST['mercredi_matin'],
-        'mercredi_apres_midi' => $_POST['mercredi_apres_midi'],
-        'jeudi_matin' => $_POST['jeudi_matin'],
-        'jeudi_apres_midi' => $_POST['jeudi_apres_midi'],
-        'vendredi_matin' => $_POST['vendredi_matin'],
-        'vendredi_apres_midi' => $_POST['vendredi_apres_midi'],
-    ];
-
-    // Utiliser des déclarations préparées pour la mise à jour
-    $stmt = $conn->prepare("UPDATE AGENT_IMMO SET 
-        lundi_matin=?, lundi_apres_midi=?, mardi_matin=?, mardi_apres_midi=?, 
-        mercredi_matin=?, mercredi_apres_midi=?, jeudi_matin=?, jeudi_apres_midi=?, 
-        vendredi_matin=?, vendredi_apres_midi=? 
-        WHERE numero_identification=?");
-    $stmt->bind_param(
-        'ssssssssssi', 
-        $disponibilites['lundi_matin'], $disponibilites['lundi_apres_midi'], 
-        $disponibilites['mardi_matin'], $disponibilites['mardi_apres_midi'], 
-        $disponibilites['mercredi_matin'], $disponibilites['mercredi_apres_midi'], 
-        $disponibilites['jeudi_matin'], $disponibilites['jeudi_apres_midi'], 
-        $disponibilites['vendredi_matin'], $disponibilites['vendredi_apres_midi'], 
-        $agent_id
-    );
-
-    if ($stmt->execute()) {
-        echo "Disponibilités mises à jour avec succès";
-    } else {
-        echo "Erreur de mise à jour: " . $stmt->error;
+function getScheduleData($conn) {
+    try {
+        $stmt = $conn->prepare("SELECT date, heure FROM Consultation WHERE id_agent = :id_agent");
+        $stmt->execute(['id_agent' => 14]); // Remplacez 14 par l'ID de l'agent concerné
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        die("Query failed: " . $e->getMessage());
     }
-
-    $stmt->close();
+    
+    $scheduleData = [
+        ['busy', 'free', 'free', 'busy', 'busy', 'busy'],
+        ['free', 'busy', 'free', 'busy', 'free', 'busy']
+    ];
+    
+    foreach ($results as $row) {
+        // Convertir la date et l'heure en indices de ligne et de colonne
+        $rowIndex = $row['heure'] == '09:00:00' ? 0 : 1;
+        $colIndex = date('N', strtotime($row['date'])) - 1;
+        $scheduleData[$rowIndex][$colIndex] = 'busy';
+    }
+    
+    return $scheduleData;
 }
 
-// Utiliser des déclarations préparées pour la sélection
-$stmt = $conn->prepare("SELECT * FROM AGENT_IMMO WHERE numero_identification = ?");
-$stmt->bind_param('i', $agent_id);
-$stmt->execute();
-$result = $stmt->get_result();
-
-if ($result === FALSE) {
-    die("Erreur dans la requête SQL : " . $conn->error);
-}
-
-$agent = $result->fetch_assoc();
-$stmt->close();
-$conn->close();
+$scheduleData = getScheduleData($conn);
 ?>
 
 <!DOCTYPE html>
@@ -139,72 +101,39 @@ $conn->close();
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>Omnes Immobilier</h1>
-    </div>
-
-    <div class="container">
-        <h2>Disponibilités de <?php echo $agent['prenom'] . " " . $agent['nom']; ?></h2>
-        <form method="POST">
-            <table class="availability-table">
+    <div class="agent-card">
+        <h2>Emploi du temps</h2>
+        <table class="schedule large">
+            <thead>
                 <tr>
-                    <th>Jour</th>
-                    <th>Matin</th>
-                    <th>Après-midi</th>
+                    <th>Horaires</th>
+                    <th>Lundi</th>
+                    <th>Mardi</th>
+                    <th>Mercredi</th>
+                    <th>Jeudi</th>
+                    <th>Vendredi</th>
+                    <th>Samedi</th>
                 </tr>
-                <tr>
-                    <td>Lundi</td>
-                    <td class="<?php echo $agent['lundi_matin'] == 'dispo' ? 'available' : 'unavailable'; ?>">
-                        <input type="hidden" name="lundi_matin" value="<?php echo $agent['lundi_matin']; ?>">
-                    </td>
-                    <td class="<?php echo $agent['lundi_apres_midi'] == 'dispo' ? 'available' : 'unavailable'; ?>">
-                        <input type="hidden" name="lundi_apres_midi" value="<?php echo $agent['lundi_apres_midi']; ?>">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Mardi</td>
-                    <td class="<?php echo $agent['mardi_matin'] == 'dispo' ? 'available' : 'unavailable'; ?>">
-                        <input type="hidden" name="mardi_matin" value="<?php echo $agent['mardi_matin']; ?>">
-                    </td>
-                    <td class="<?php echo $agent['mardi_apres_midi'] == 'dispo' ? 'available' : 'unavailable'; ?>">
-                        <input type="hidden" name="mardi_apres_midi" value="<?php echo $agent['mardi_apres_midi']; ?>">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Mercredi</td>
-                    <td class="<?php echo $agent['mercredi_matin'] == 'dispo' ? 'available' : 'unavailable'; ?>">
-                        <input type="hidden" name="mercredi_matin" value="<?php echo $agent['mercredi_matin']; ?>">
-                    </td>
-                    <td class="<?php echo $agent['mercredi_apres_midi'] == 'dispo' ? 'available' : 'unavailable'; ?>">
-                        <input type="hidden" name="mercredi_apres_midi" value="<?php echo $agent['mercredi_apres_midi']; ?>">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Jeudi</td>
-                    <td class="<?php echo $agent['jeudi_matin'] == 'dispo' ? 'available' : 'unavailable'; ?>">
-                        <input type="hidden" name="jeudi_matin" value="<?php echo $agent['jeudi_matin']; ?>">
-                    </td>
-                    <td class="<?php echo $agent['jeudi_apres_midi'] == 'dispo' ? 'available' : 'unavailable'; ?>">
-                        <input type="hidden" name="jeudi_apres_midi" value="<?php echo $agent['jeudi_apres_midi']; ?>">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Vendredi</td>
-                    <td class="<?php echo $agent['vendredi_matin'] == 'dispo' ? 'available' : 'unavailable'; ?>">
-                        <input type="hidden" name="vendredi_matin" value="<?php echo $agent['vendredi_matin']; ?>">
-                    </td>
-                    <td class="<?php echo $agent['vendredi_apres_midi'] == 'dispo' ? 'available' : 'unavailable'; ?>">
-                        <input type="hidden" name="vendredi_apres_midi" value="<?php echo $agent['vendredi_apres_midi']; ?>">
-                    </td>
-                </tr>
-            </table>
-            <button type="submit" class="save-button">Enregistrer les modifications</button>
-        </form>
-    </div>
-
-    <div class="footer">
-        <p>Contactez-nous : <a href="mailto:contact@omnesimmobilier.fr">contact@omnesimmobilier.fr</a></p>
-        <p>Téléphone : +33 01 23 45 67 89</p>
+            </thead>
+            <tbody>
+                <?php
+                $hours = ['9H - 12H', '13H30 - 15H30'];
+                foreach ($scheduleData as $rowIndex => $row) {
+                    echo "<tr>";
+                    echo "<td>{$hours[$rowIndex]}</td>";
+                    foreach ($row as $colIndex => $cell) {
+                        $class = $cell;
+                        echo "<td class='{$class}' data-row='{$rowIndex}' data-col='{$colIndex}'></td>";
+                    }
+                    echo "</tr>";
+                }
+                ?>
+            </tbody>
+        </table>
+        <div class="buttons">
+            <button class="btn" onclick="saveAppointment()">Enregistrer le RDV</button>
+            <button class="btn" onclick="cancelAppointment()">Annuler le RDV</button>
+        </div>
     </div>
 
     <script>
@@ -216,6 +145,66 @@ $conn->close();
                 input.value = td.classList.contains('available') ? 'dispo' : 'indispo';
             });
         });
+        
+        function saveAppointment() {
+            const selected = document.querySelector('.selected');
+            if (!selected) {
+                alert('Veuillez sélectionner un créneau horaire.');
+                return;
+            }
+            
+            const rowIndex = selected.dataset.row;
+            const colIndex = selected.dataset.col;
+            
+            fetch('manage_appointment.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `action=save&rowIndex=${rowIndex}&colIndex=${colIndex}&id_agent=14`
+            })
+            .then(response => response.text())
+            .then(data => {
+                alert(data);
+                selected.classList.remove('selected');
+                selected.classList.add('busy');
+            })
+            .catch(error => {
+                alert('Erreur lors de la sauvegarde du rendez-vous.');
+                console.error(error);
+            });
+        }
+        
+        function cancelAppointment() {
+            const selected = document.querySelector('.selected');
+            if (!selected) {
+                alert('Veuillez sélectionner un créneau horaire à annuler.');
+                return;
+            }
+            
+            const rowIndex = selected.dataset.row;
+            const colIndex = selected.dataset.col;
+            
+            fetch('manage_appointment.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `action=cancel&rowIndex=${rowIndex}&colIndex=${colIndex}&id_agent=14`
+            })
+            .then(response => response.text())
+            .then(data => {
+                alert(data);
+                selected.classList.remove('selected');
+                selected.classList.remove('busy');
+                selected.classList.add('free');
+            })
+            .catch(error => {
+                alert('Erreur lors de l\'annulation du rendez-vous.');
+                console.error(error);
+            });
+        }
     </script>
 </body>
 </html>
+
