@@ -8,7 +8,13 @@ try {
     die('Erreur : ' . $e->getMessage());
 }
 
-// Vérifier si le client est connecté, sinon rediriger vers la page d'identification
+// Récupérer le nom et le prénom du client depuis les variables de session
+$nom = $_SESSION['name'];
+$prenom = $_SESSION['surname'];
+?>
+
+
+<!--// Vérifier si le client est connecté, sinon rediriger vers la page d'identification
 //if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true || $_SESSION['user_type'] !== 'client') {
 //    header("Location: identification.php");
 //    exit;
@@ -21,7 +27,7 @@ try {
 //$stmt->execute(array(':id_client' => $id_client));
 //$consultations = $stmt->fetchAll(PDO::FETCH_ASSOC);
 //?>
-
+-->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -103,7 +109,7 @@ try {
         <!--<a href="deconnexion.php" class="logout-btn">Déconnexion</a>-->
     </div>
     <div class="container">
-        <h1>Votre Espace</h1>
+        <h1>Bienvenue, <?php echo $prenom . ' ' . $nom; ?></h1>
         <h2>Historique des Consultations Immobilières</h2>
         <div class="consultation-history">
             <?php if (!empty($consultations)): ?>
