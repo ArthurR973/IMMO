@@ -1,8 +1,8 @@
 <?php
 $servername = "localhost";
-$username = "root";  // Remplacez par votre nom d'utilisateur
-$password = "";      // Remplacez par votre mot de passe
-$dbname = "projet_piscine"; // Remplacez par le nom de votre base de données
+$username = "root";  
+$password = "";      
+$dbname = "projet_piscine"; 
 
 // Créer une connexion
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -13,11 +13,10 @@ if ($conn->connect_error) {
 }
 
 // Requête pour récupérer les biens commerciaux et leurs agents
-$sql = "SELECT BIEN.numero, BIEN.photo, BIEN.description, BIEN.adresse, AGENT_IMMO.prenom, AGENT_IMMO.nom, AGENT_IMMO.courriel, AGENT_IMMO.tel, AGENT_IMMO.numero_identification
-        FROM BIEN
+$sql = "SELECT BIEN.type, BIEN.numero, BIEN.photo, BIEN.description, BIEN.adresse, BIEN.prix, AGENT_IMMO.prenom, AGENT_IMMO.nom, AGENT_IMMO.courriel, AGENT_IMMO.tel 
+        FROM BIEN 
         JOIN AGENT_IMMO ON BIEN.id_agent = AGENT_IMMO.numero_identification
         WHERE BIEN.type = 'Immobilier commercial'";
-
 $result = $conn->query($sql);
 if ($result === FALSE) {
     die("Erreur dans la requête SQL : " . $conn->error);
@@ -132,7 +131,7 @@ if ($result === FALSE) {
         <a href="accueil.php">Accueil</a>
         <a href="tout_parcourir.php">Tout Parcourir</a>
         <a href="recherche.php">Recherche</a>
-        <a href="rendez_vous.php">Rendez-vous</a>
+        <a href="rendez_vous.html">Rendez-vous</a>
         <a href="identification.php">Votre Compte</a>
     </div>
     
@@ -143,19 +142,21 @@ if ($result === FALSE) {
             if ($result->num_rows > 0) {
                 while($row = $result->fetch_assoc()) {
                     echo "<div class='property-card'>";
-                    echo "<img src='" . $row["photo"] . "' alt='Photo de la propriété commerciale'>";
+                    echo "<img src='" . $row["photo"] . "' alt='Photo du bien commercial'>";
                     echo "<div class='property-info'>";
                     echo "<h3>" . $row["description"] . "</h3>";
+                    echo "<p>Numéro du bien : " . $row["numero"] . "</p>";
                     echo "<p>Adresse : " . $row["adresse"] . "</p>";
                     echo "<p>Agent : " . $row["prenom"] . " " . $row["nom"] . "</p>";
                     echo "<p>Email : <a href='mailto:" . $row["courriel"] . "'>" . $row["courriel"] . "</a></p>";
                     echo "<p>Téléphone : " . $row["tel"] . "</p>";
-                    echo "<a href='contacter_agent.php?agent_id=" . $row["numero_identification"] . "' class='btn btn-light'>Contactez l'agent</a>";
+                    echo "<p>Prix: " . $row["prix"] . " €</p>";
+                    echo "<a href='contacter_agent.php?agent_id=" . $row["numero"] . "' class='btn btn-light'>Contactez l'agent</a>";
                     echo "</div>";
                     echo "</div>";
                 }
             } else {
-                echo "<p>Aucun bien immobilier commercial trouvé.</p>";
+                echo "<p>Aucun bien commercial trouvé.</p>";
             }
             $conn->close();
             ?>
@@ -164,7 +165,7 @@ if ($result === FALSE) {
 
     <div class="footer">
         <p>© 2024 Omnes Immobilier - Tous droits réservés</p>
-        <p>Contactez-nous : email@omnesimmobilier.fr | +33 01 23 45 67 89</p>
+        <p>Contactez-nous : <a href="mailto:contact@omnesimmobilier.fr">contact@omnesimmobilier.fr</a> | +33 01 23 45 67 89</p>
     </div>
 </div>
 

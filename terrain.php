@@ -1,8 +1,8 @@
 <?php
 $servername = "localhost";
-$username = "root";  // Remplacez par votre nom d'utilisateur
-$password = "";      // Remplacez par votre mot de passe
-$dbname = "projet_piscine"; // Remplacez par le nom de votre base de données
+$username = "root";  
+$password = "";      
+$dbname = "projet_piscine"; 
 
 // Créer une connexion
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -12,12 +12,11 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Requête pour récupérer les biens et leurs agents pour le type "terrain"
-$sql = "SELECT BIEN.numero, BIEN.photo, BIEN.description, BIEN.adresse, AGENT_IMMO.prenom, AGENT_IMMO.nom, AGENT_IMMO.courriel, AGENT_IMMO.tel, AGENT_IMMO.numero_identification
-        FROM BIEN
+// Requête pour récupérer les terrains et leurs agents
+$sql = "SELECT BIEN.type, BIEN.numero, BIEN.photo, BIEN.description, BIEN.adresse, BIEN.prix, AGENT_IMMO.prenom, AGENT_IMMO.nom, AGENT_IMMO.courriel, AGENT_IMMO.tel 
+        FROM BIEN 
         JOIN AGENT_IMMO ON BIEN.id_agent = AGENT_IMMO.numero_identification
         WHERE BIEN.type = 'Le terrain'";
-
 $result = $conn->query($sql);
 if ($result === FALSE) {
     die("Erreur dans la requête SQL : " . $conn->error);
@@ -29,7 +28,7 @@ if ($result === FALSE) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terrain - Omnes Immobilier</title>
+    <title>Terrain à Vendre - Omnes Immobilier</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Lora:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -137,7 +136,7 @@ if ($result === FALSE) {
     </div>
     
     <div class="container">
-        <h2 class="text-center">Terrain</h2>
+        <h2 class="text-center">Terrain à Vendre</h2>
         <div class="property-list">
             <?php
             if ($result->num_rows > 0) {
@@ -146,11 +145,13 @@ if ($result === FALSE) {
                     echo "<img src='" . $row["photo"] . "' alt='Photo du terrain'>";
                     echo "<div class='property-info'>";
                     echo "<h3>" . $row["description"] . "</h3>";
+                    echo "<p>Numéro du bien : " . $row["numero"] . "</p>";
                     echo "<p>Adresse : " . $row["adresse"] . "</p>";
                     echo "<p>Agent : " . $row["prenom"] . " " . $row["nom"] . "</p>";
                     echo "<p>Email : <a href='mailto:" . $row["courriel"] . "'>" . $row["courriel"] . "</a></p>";
                     echo "<p>Téléphone : " . $row["tel"] . "</p>";
-                    echo "<a href='contacter_agent.php?agent_id=" . $row["numero_identification"] . "' class='btn btn-light'>Contactez l'agent</a>";
+                    echo "<p>Prix: " . $row["prix"] . " €</p>";
+                    echo "<a href='contacter_agent.php?agent_id=" . $row["numero"] . "' class='btn btn-light'>Contactez l'agent</a>";
                     echo "</div>";
                     echo "</div>";
                 }
