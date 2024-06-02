@@ -9,7 +9,7 @@
     $conn = new mysqli($servername, $username, $password, $dbname);
 
     $error_message = "";
-
+/*
     // Vérifie si l'utilisateur est déjà connecté
 if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
     // Redirige vers la page correspondante en fonction du type d'utilisateur
@@ -24,7 +24,7 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
         exit();
     }
 }
-
+*/
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Récupérez les données du formulaire
         $Nom = $_POST['name'];
