@@ -65,6 +65,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_param("iis", $user_id, $agent_id, $message);
         $stmt->execute();
         $stmt->close();
+
+        // Ajouter une réponse automatique de l'agent
+        $autoResponse = "Merci pour votre message. Nous reviendrons vers vous sous peu.";
+        $stmt = $conn->prepare("INSERT INTO messages (user_id, agent_id, message, sender) VALUES (?, ?, ?, 'agent')");
+        $stmt->bind_param("iis", $user_id, $agent_id, $autoResponse);
+        $stmt->execute();
+        $stmt->close();
     }
 }
 
