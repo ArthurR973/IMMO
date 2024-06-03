@@ -236,7 +236,11 @@ $result = $conn->query($sql);
 </div>
 
 <div class="footer">
-    <p>&copy; 2024 OMNES IMMOBILIER. Tous droits réservés.</p>
+        <p>© 2024 Omnes Immobilier - Tous droits réservés</p>
+        <p>Mail : <a href="mailto:omnes.immobilier@gmail.com">email@omnesimmobilier.fr</a></p>
+        <p>Téléphone : <a href="tel:+33102030405">+33 01 23 45 67 89</a></p> 
+        <p>Adresse : <a href="https://www.google.fr/maps/place/4+Rue+Principale,+67300+Schiltigheim">444 N. Rue Principale, Charlotte</a></p>
+    </div>
 </div>
 
 <script>
