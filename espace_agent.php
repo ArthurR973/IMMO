@@ -27,7 +27,61 @@ $consultations = array(
     <title>Espace Agent - Omnes Immobilier</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        /* Vos styles CSS */
+        body {
+            font-family: 'Lora', serif;
+            color: #333;
+        }
+        .header {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .header h1 {
+            font-family: 'Montserrat', sans-serif;
+            color: white;
+            font-size: 2.5rem;
+            margin: 0;
+        }
+        .navigation {
+            background-color: #f8f9fa;
+            padding: 10px;
+            text-align: center;
+        }
+        .navigation a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+        .welcome {
+            background-color: #f8f9fa;
+            color: #333;
+            padding: 50px;
+            text-align: center;
+        }
+        .welcome h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        .welcome p {
+            font-size: 1rem;
+        }
+        .event-section {
+            padding: 50px 20px;
+            text-align: center;
+        }
+        .carousel-item img {
+            width: 100%;
+            height: auto;
+        }
+        .footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
     </style>
 </head>
 <body>
@@ -42,8 +96,10 @@ $consultations = array(
     <!-- Navigation -->
     <div class="navigation">
         <a href="accueil.php">Accueil</a>
-        <a href="espace_agent.php">Espace Agent</a>
-        <a href="logout.php" class="logout-btn">Déconnexion</a>
+        <a href="tout_parcourir.php">Tout Parcourir</a>
+        <a href="recherche.php">Recherche</a>
+        <a href="rendezvous.php">Rendez-vous</a>
+        <a href="espace_agent.php">Votre Compte</a>
     </div>
     
     <!-- Contenu de la page -->
@@ -51,8 +107,8 @@ $consultations = array(
         <h1>Espace Agent</h1>
         <!-- Informations de l'agent -->
         <div class="agent-info">
-            <p>Nom et prénom : <?php echo $agent_name; ?></p>
-            <p>Courriel : <?php echo $agent_email; ?></p>
+            <p>Nom et prénom : <?php echo htmlspecialchars($agent_name); ?></p>
+            <p>Courriel : <?php echo htmlspecialchars($agent_email); ?></p>
         </div>
         <!-- Consultations courantes ou à venir -->
         <h2>Consultations</h2>
@@ -60,7 +116,7 @@ $consultations = array(
             <?php if (count($consultations) > 0): ?>
                 <ul>
                     <?php foreach ($consultations as $consultation): ?>
-                        <li>Date/Heure : <?php echo $consultation['date']; ?> - Client : <?php echo $consultation['client_name']; ?> (<?php echo $consultation['client_email']; ?>)</li>
+                        <li>Date/Heure : <?php echo htmlspecialchars($consultation['date']); ?> - Client : <?php echo htmlspecialchars($consultation['client_name']); ?> (<?php echo htmlspecialchars($consultation['client_email']); ?>)</li>
                     <?php endforeach; ?>
                 </ul>
             <?php else: ?>
