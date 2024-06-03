@@ -103,13 +103,16 @@ if ($result === FALSE) {
         }
         .property-info h3 {
             margin-bottom: 10px;
+            font-size: 1rem; /* Taille réduite */
         }
         .property-info p {
             margin-bottom: 5px;
+            font-size: 0,2rem; /* Taille réduite */
         }
         .property-info a {
             color: white;
             text-decoration: underline;
+            font-size: 0,2rem; /* Taille réduite */
         }
         .footer {
             background-color: #333;
