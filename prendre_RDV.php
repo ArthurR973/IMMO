@@ -12,31 +12,48 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-function getScheduleData($conn) {
-    try {
-        $stmt = $conn->prepare("SELECT date, heure FROM Consultation WHERE id_agent = :id_agent");
-        $stmt->execute(['id_agent' => 14]); // Remplacez 14 par l'ID de l'agent concerné
-        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } catch (PDOException $e) {
-        die("Query failed: " . $e->getMessage());
-    }
+// Lire l'ID de l'agent depuis l'URL
+$id_agent = isset($_GET['id_agent']) ? intval($_GET['id_agent']) : 0;
+if ($id_agent == 0) {
+    die("ID de l'agent invalide.");
+}
+
+function getAgentAvailability($conn, $id_agent) {
+    $stmt = $conn->prepare("SELECT lundi_matin, lundi_apres_midi, mardi_matin, mardi_apres_midi, mercredi_matin, mercredi_apres_midi, jeudi_matin, jeudi_apres_midi, vendredi_matin, vendredi_apres_midi FROM AGENT_IMMO WHERE numero_identification = ?");
+    $stmt->bind_param("i", $id_agent);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $availability = $result->fetch_assoc();
     
     $scheduleData = [
-        ['busy', 'free', 'free', 'busy', 'busy', 'busy'],
-        ['free', 'busy', 'free', 'busy', 'free', 'busy']
+        [$availability['lundi_matin'], $availability['mardi_matin'], $availability['mercredi_matin'], $availability['jeudi_matin'], $availability['vendredi_matin']],
+        [$availability['lundi_apres_midi'], $availability['mardi_apres_midi'], $availability['mercredi_apres_midi'], $availability['jeudi_apres_midi'], $availability['vendredi_apres_midi']]
     ];
     
+    return $scheduleData;
+}
+
+function getScheduleData($conn, $id_agent) {
+    $stmt = $conn->prepare("SELECT date, heure FROM RDV WHERE id_agent = ?");
+    $stmt->bind_param("i", $id_agent);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $results = $result->fetch_all(MYSQLI_ASSOC);
+    
+    $scheduleData = getAgentAvailability($conn, $id_agent);
+    
     foreach ($results as $row) {
-        // Convertir la date et l'heure en indices de ligne et de colonne
         $rowIndex = $row['heure'] == '09:00:00' ? 0 : 1;
         $colIndex = date('N', strtotime($row['date'])) - 1;
-        $scheduleData[$rowIndex][$colIndex] = 'busy';
+        if ($colIndex < 5) {
+            $scheduleData[$rowIndex][$colIndex] = 'busy';
+        }
     }
     
     return $scheduleData;
 }
 
-$scheduleData = getScheduleData($conn);
+$scheduleData = getScheduleData($conn, $id_agent);
 ?>
 
 <!DOCTYPE html>
@@ -45,7 +62,7 @@ $scheduleData = getScheduleData($conn);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prendre un RDV - Omnes Immobilier</title>
-    <link rel="stylesheet" href="style_agent.css">
+    <link rel="stylesheet" href="prendre_RDV.css">
     <style>
         body {
             font-family: 'Lora', serif;
@@ -80,10 +97,10 @@ $scheduleData = getScheduleData($conn);
             padding: 10px;
             cursor: pointer;
         }
-        .available {
+        .free {
             background-color: white;
         }
-        .unavailable {
+        .busy {
             background-color: black;
         }
         .save-button {
@@ -103,7 +120,7 @@ $scheduleData = getScheduleData($conn);
 <body>
     <div class="agent-card">
         <h2>Emploi du temps</h2>
-        <table class="schedule large">
+        <table class="availability-table">
             <thead>
                 <tr>
                     <th>Horaires</th>
@@ -112,7 +129,6 @@ $scheduleData = getScheduleData($conn);
                     <th>Mercredi</th>
                     <th>Jeudi</th>
                     <th>Vendredi</th>
-                    <th>Samedi</th>
                 </tr>
             </thead>
             <tbody>
@@ -122,7 +138,7 @@ $scheduleData = getScheduleData($conn);
                     echo "<tr>";
                     echo "<td>{$hours[$rowIndex]}</td>";
                     foreach ($row as $colIndex => $cell) {
-                        $class = $cell;
+                        $class = $cell === 'dispo' ? 'free' : 'busy';
                         echo "<td class='{$class}' data-row='{$rowIndex}' data-col='{$colIndex}'></td>";
                     }
                     echo "</tr>";
@@ -131,18 +147,18 @@ $scheduleData = getScheduleData($conn);
             </tbody>
         </table>
         <div class="buttons">
-            <button class="btn" onclick="saveAppointment()">Enregistrer le RDV</button>
-            <button class="btn" onclick="cancelAppointment()">Annuler le RDV</button>
+            <button class="save-button" onclick="saveAppointment()">Enregistrer le RDV</button>
+            <button class="save-button" onclick="cancelAppointment()">Annuler le RDV</button>
         </div>
     </div>
 
     <script>
         document.querySelectorAll('.availability-table td').forEach(td => {
             td.addEventListener('click', () => {
-                td.classList.toggle('available');
-                td.classList.toggle('unavailable');
-                let input = td.querySelector('input[type="hidden"]');
-                input.value = td.classList.contains('available') ? 'dispo' : 'indispo';
+                if (td.classList.contains('free')) {
+                    document.querySelectorAll('.availability-table td').forEach(cell => cell.classList.remove('selected'));
+                    td.classList.add('selected');
+                }
             });
         });
         
@@ -161,7 +177,7 @@ $scheduleData = getScheduleData($conn);
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                body: `action=save&rowIndex=${rowIndex}&colIndex=${colIndex}&id_agent=14`
+                body: `action=save&rowIndex=${rowIndex}&colIndex=${colIndex}&id_agent=<?php echo $id_agent; ?>`
             })
             .then(response => response.text())
             .then(data => {
@@ -190,7 +206,7 @@ $scheduleData = getScheduleData($conn);
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                body: `action=cancel&rowIndex=${rowIndex}&colIndex=${colIndex}&id_agent=14`
+                body: `action=cancel&rowIndex=${rowIndex}&colIndex=${colIndex}&id_agent=<?php echo $id_agent; ?>`
             })
             .then(response => response.text())
             .then(data => {
@@ -207,4 +223,3 @@ $scheduleData = getScheduleData($conn);
     </script>
 </body>
 </html>
-

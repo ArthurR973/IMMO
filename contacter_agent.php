@@ -160,7 +160,7 @@ $agent = $result->fetch_assoc();
                 </tr>
             </table>
             <div class="buttons">
-                <a href="identification.php" class="button">Prendre un RDV</a>
+                <a href="prendre_RDV.php" class="button">Prendre un RDV</a>
                 <a href="communiquer_agent.php?agent_id=<?php echo $agent['numero_identification']; ?>" class="button">Communiquer avec l'agent immobilier</a>
                 <a href="<?php echo $agent['cv']; ?>" class="button">Voir son CV</a>
             </div>
