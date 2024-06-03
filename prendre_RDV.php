@@ -2,44 +2,41 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "projet_piscine"; // Remplacez par le nom correct de votre base de données
+$dbname = "projet_piscine";
 
-try {
-    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Connection failed: " . $e->getMessage());
+// Créer une connexion
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Vérifier la connexion
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
 
-// Fonction pour récupérer les disponibilités de l'agent en fonction de son identifiant
-function getScheduleData($conn, $agent_id) {
+function getScheduleData($conn) {
     try {
-        $stmt = $conn->prepare("SELECT lundi_matin, lundi_apres_midi, mardi_matin, mardi_apres_midi, mercredi_matin, mercredi_apres_midi, jeudi_matin, jeudi_apres_midi, vendredi_matin, vendredi_apres_midi FROM AGENT_IMMO WHERE numero_identification = :agent_id");
-        $stmt->bindParam(':agent_id', $agent_id);
-        $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        // Créer un tableau pour stocker les disponibilités
-        $scheduleData = array();
-
-        // Ajouter les disponibilités de chaque jour de la semaine dans le tableau
-        $scheduleData[] = array($row['lundi_matin'], $row['lundi_apres_midi']);
-        $scheduleData[] = array($row['mardi_matin'], $row['mardi_apres_midi']);
-        $scheduleData[] = array($row['mercredi_matin'], $row['mercredi_apres_midi']);
-        $scheduleData[] = array($row['jeudi_matin'], $row['jeudi_apres_midi']);
-        $scheduleData[] = array($row['vendredi_matin'], $row['vendredi_apres_midi']);
-
-        return $scheduleData;
+        $stmt = $conn->prepare("SELECT date, heure FROM Consultation WHERE id_agent = :id_agent");
+        $stmt->execute(['id_agent' => 14]); // Remplacez 14 par l'ID de l'agent concerné
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         die("Query failed: " . $e->getMessage());
     }
+    
+    $scheduleData = [
+        ['busy', 'free', 'free', 'busy', 'busy', 'busy'],
+        ['free', 'busy', 'free', 'busy', 'free', 'busy']
+    ];
+    
+    foreach ($results as $row) {
+        // Convertir la date et l'heure en indices de ligne et de colonne
+        $rowIndex = $row['heure'] == '09:00:00' ? 0 : 1;
+        $colIndex = date('N', strtotime($row['date'])) - 1;
+        $scheduleData[$rowIndex][$colIndex] = 'busy';
+    }
+    
+    return $scheduleData;
 }
 
-// Identifiant de l'agent récupéré depuis l'URL
-$agent_id = $_GET['agent_id'];
-
-// Récupérer les disponibilités de l'agent
-$scheduleData = getScheduleData($conn, $agent_id);
+$scheduleData = getScheduleData($conn);
 ?>
 
 <!DOCTYPE html>
@@ -47,9 +44,61 @@ $scheduleData = getScheduleData($conn, $agent_id);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prendre un RDV</title>
-    <link rel="stylesheet" href="prendre_RDV.css">
-    <script src="prendre_RDV.js" defer></script>
+    <title>Prendre un RDV - Omnes Immobilier</title>
+    <link rel="stylesheet" href="style_agent.css">
+    <style>
+        body {
+            font-family: 'Lora', serif;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header, .footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            width: 100%;
+        }
+        .header h1, .footer p {
+            font-family: 'Montserrat', sans-serif;
+        }
+        .container {
+            padding: 50px 20px;
+            width: 100%;
+            max-width: 1200px;
+            text-align: center;
+        }
+        .availability-table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 80%;
+        }
+        .availability-table th, .availability-table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            cursor: pointer;
+        }
+        .available {
+            background-color: white;
+        }
+        .unavailable {
+            background-color: black;
+        }
+        .save-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            border: none;
+        }
+        .save-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
     <div class="agent-card">
@@ -63,17 +112,17 @@ $scheduleData = getScheduleData($conn, $agent_id);
                     <th>Mercredi</th>
                     <th>Jeudi</th>
                     <th>Vendredi</th>
+                    <th>Samedi</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
                 $hours = ['9H - 12H', '13H30 - 15H30'];
-                $hourValues = array_values($hours);
                 foreach ($scheduleData as $rowIndex => $row) {
                     echo "<tr>";
-                    echo "<td>" . ($rowIndex === 0 ? '9H - 12H' : '13H30 - 15H30') . "</td>";
+                    echo "<td>{$hours[$rowIndex]}</td>";
                     foreach ($row as $colIndex => $cell) {
-                        $class = $cell === 'indispo' ? 'busy' : 'free';
+                        $class = $cell;
                         echo "<td class='{$class}' data-row='{$rowIndex}' data-col='{$colIndex}'></td>";
                     }
                     echo "</tr>";
@@ -86,16 +135,14 @@ $scheduleData = getScheduleData($conn, $agent_id);
             <button class="btn" onclick="cancelAppointment()">Annuler le RDV</button>
         </div>
     </div>
+
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const scheduleCells = document.querySelectorAll('.schedule td.free');
-            scheduleCells.forEach(cell => {
-                cell.addEventListener('click', () => {
-                    if (document.querySelector('.selected')) {
-                        document.querySelector('.selected').classList.remove('selected');
-                    }
-                    cell.classList.add('selected');
-                });
+        document.querySelectorAll('.availability-table td').forEach(td => {
+            td.addEventListener('click', () => {
+                td.classList.toggle('available');
+                td.classList.toggle('unavailable');
+                let input = td.querySelector('input[type="hidden"]');
+                input.value = td.classList.contains('available') ? 'dispo' : 'indispo';
             });
         });
         
@@ -114,7 +161,7 @@ $scheduleData = getScheduleData($conn, $agent_id);
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                body: `action=save&rowIndex=${rowIndex}&colIndex=${colIndex}&id_agent=<?php echo $agent_id; ?>`
+                body: `action=save&rowIndex=${rowIndex}&colIndex=${colIndex}&id_agent=14`
             })
             .then(response => response.text())
             .then(data => {
@@ -143,7 +190,7 @@ $scheduleData = getScheduleData($conn, $agent_id);
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                body: `action=cancel&rowIndex=${rowIndex}&colIndex=${colIndex}&id_agent=<?php echo $agent_id; ?>`
+                body: `action=cancel&rowIndex=${rowIndex}&colIndex=${colIndex}&id_agent=14`
             })
             .then(response => response.text())
             .then(data => {
