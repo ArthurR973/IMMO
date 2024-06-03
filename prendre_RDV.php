@@ -12,48 +12,33 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Lire l'ID de l'agent depuis l'URL
-$id_agent = isset($_GET['id_agent']) ? intval($_GET['id_agent']) : 0;
-if ($id_agent == 0) {
-    die("ID de l'agent invalide.");
+// Vérifier si 'agent_id' est défini dans $_GET
+if (!isset($_GET['agent_id']) || empty($_GET['agent_id'])) {
+    die("Erreur : l'ID de l'agent n'est pas spécifié.");
 }
 
-function getAgentAvailability($conn, $id_agent) {
-    $stmt = $conn->prepare("SELECT lundi_matin, lundi_apres_midi, mardi_matin, mardi_apres_midi, mercredi_matin, mercredi_apres_midi, jeudi_matin, jeudi_apres_midi, vendredi_matin, vendredi_apres_midi FROM AGENT_IMMO WHERE numero_identification = ?");
-    $stmt->bind_param("i", $id_agent);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $availability = $result->fetch_assoc();
-    
-    $scheduleData = [
-        [$availability['lundi_matin'], $availability['mardi_matin'], $availability['mercredi_matin'], $availability['jeudi_matin'], $availability['vendredi_matin']],
-        [$availability['lundi_apres_midi'], $availability['mardi_apres_midi'], $availability['mercredi_apres_midi'], $availability['jeudi_apres_midi'], $availability['vendredi_apres_midi']]
-    ];
-    
-    return $scheduleData;
+$agent_id = $_GET['agent_id'];
+
+// Requête pour récupérer les disponibilités de l'agent
+$sql = "SELECT date, heure FROM RDV WHERE id_agent = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $agent_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+$scheduleData = [
+    ['free', 'free', 'free', 'free', 'free', 'free'],
+    ['free', 'free', 'free', 'free', 'free', 'free']
+];
+
+while ($row = $result->fetch_assoc()) {
+    $rowIndex = $row['heure'] == '09:00:00' ? 0 : 1;
+    $colIndex = date('N', strtotime($row['date'])) - 1;
+    $scheduleData[$rowIndex][$colIndex] = 'busy';
 }
 
-function getScheduleData($conn, $id_agent) {
-    $stmt = $conn->prepare("SELECT date, heure FROM RDV WHERE id_agent = ?");
-    $stmt->bind_param("i", $id_agent);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $results = $result->fetch_all(MYSQLI_ASSOC);
-    
-    $scheduleData = getAgentAvailability($conn, $id_agent);
-    
-    foreach ($results as $row) {
-        $rowIndex = $row['heure'] == '09:00:00' ? 0 : 1;
-        $colIndex = date('N', strtotime($row['date'])) - 1;
-        if ($colIndex < 5) {
-            $scheduleData[$rowIndex][$colIndex] = 'busy';
-        }
-    }
-    
-    return $scheduleData;
-}
-
-$scheduleData = getScheduleData($conn, $id_agent);
+$stmt->close();
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -97,10 +82,10 @@ $scheduleData = getScheduleData($conn, $id_agent);
             padding: 10px;
             cursor: pointer;
         }
-        .free {
+        .available {
             background-color: white;
         }
-        .busy {
+        .unavailable {
             background-color: black;
         }
         .save-button {
@@ -118,7 +103,11 @@ $scheduleData = getScheduleData($conn, $id_agent);
     </style>
 </head>
 <body>
-    <div class="agent-card">
+    <div class="header">
+        <h1>Omnes Immobilier</h1>
+    </div>
+
+    <div class="container">
         <h2>Emploi du temps</h2>
         <table class="availability-table">
             <thead>
@@ -129,6 +118,7 @@ $scheduleData = getScheduleData($conn, $id_agent);
                     <th>Mercredi</th>
                     <th>Jeudi</th>
                     <th>Vendredi</th>
+                    <th>Samedi</th>
                 </tr>
             </thead>
             <tbody>
@@ -138,7 +128,7 @@ $scheduleData = getScheduleData($conn, $id_agent);
                     echo "<tr>";
                     echo "<td>{$hours[$rowIndex]}</td>";
                     foreach ($row as $colIndex => $cell) {
-                        $class = $cell === 'dispo' ? 'free' : 'busy';
+                        $class = $cell == 'busy' ? 'unavailable' : 'available';
                         echo "<td class='{$class}' data-row='{$rowIndex}' data-col='{$colIndex}'></td>";
                     }
                     echo "</tr>";
@@ -152,16 +142,19 @@ $scheduleData = getScheduleData($conn, $id_agent);
         </div>
     </div>
 
+    <div class="footer">
+        <p>Contactez-nous : <a href="mailto:contact@omnesimmobilier.fr">contact@omnesimmobilier.fr</a></p>
+        <p>Téléphone : +33 01 23 45 67 89</p>
+    </div>
+
     <script>
         document.querySelectorAll('.availability-table td').forEach(td => {
             td.addEventListener('click', () => {
-                if (td.classList.contains('free')) {
-                    document.querySelectorAll('.availability-table td').forEach(cell => cell.classList.remove('selected'));
-                    td.classList.add('selected');
-                }
+                td.classList.toggle('available');
+                td.classList.toggle('unavailable');
             });
         });
-        
+
         function saveAppointment() {
             const selected = document.querySelector('.selected');
             if (!selected) {
@@ -171,26 +164,20 @@ $scheduleData = getScheduleData($conn, $id_agent);
             
             const rowIndex = selected.dataset.row;
             const colIndex = selected.dataset.col;
-            
-            fetch('manage_appointment.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: `action=save&rowIndex=${rowIndex}&colIndex=${colIndex}&id_agent=<?php echo $id_agent; ?>`
-            })
-            .then(response => response.text())
-            .then(data => {
-                alert(data);
-                selected.classList.remove('selected');
-                selected.classList.add('busy');
-            })
-            .catch(error => {
-                alert('Erreur lors de la sauvegarde du rendez-vous.');
-                console.error(error);
-            });
+
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "manage_appointment.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    alert(xhr.responseText);
+                    selected.classList.remove('selected');
+                    selected.classList.add('busy');
+                }
+            };
+            xhr.send(`action=save&rowIndex=${rowIndex}&colIndex=${colIndex}&agent_id=<?php echo $agent_id; ?>`);
         }
-        
+
         function cancelAppointment() {
             const selected = document.querySelector('.selected');
             if (!selected) {
@@ -200,25 +187,19 @@ $scheduleData = getScheduleData($conn, $id_agent);
             
             const rowIndex = selected.dataset.row;
             const colIndex = selected.dataset.col;
-            
-            fetch('manage_appointment.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: `action=cancel&rowIndex=${rowIndex}&colIndex=${colIndex}&id_agent=<?php echo $id_agent; ?>`
-            })
-            .then(response => response.text())
-            .then(data => {
-                alert(data);
-                selected.classList.remove('selected');
-                selected.classList.remove('busy');
-                selected.classList.add('free');
-            })
-            .catch(error => {
-                alert('Erreur lors de l\'annulation du rendez-vous.');
-                console.error(error);
-            });
+
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "manage_appointment.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    alert(xhr.responseText);
+                    selected.classList.remove('selected');
+                    selected.classList.remove('busy');
+                    selected.classList.add('free');
+                }
+            };
+            xhr.send(`action=cancel&rowIndex=${rowIndex}&colIndex=${colIndex}&agent_id=<?php echo $agent_id; ?>`);
         }
     </script>
 </body>
