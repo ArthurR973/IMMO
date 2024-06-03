@@ -25,10 +25,12 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
     }
 }
 */
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Récupérez les données du formulaire
-        $Nom = $_POST['name'];
-        $Prénom = $_POST['surname'];
+ 
+// Vérifie si les données du formulaire ont été soumises
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Récupère les informations du nom et du prénom de l'agent
+    $nom = $_POST['name'];
+    $prenom = $_POST['surname'];
 
         // Sécurisez les données
         $Nom = $conn->real_escape_string($Nom);
